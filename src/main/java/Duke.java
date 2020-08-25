@@ -19,23 +19,37 @@ public class Duke {
         String line;
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
-        String[] list = new String[100];
-        int listCount = 0;
+        int taskCount = 0;
+        Task[] tasks = new Task[100];
 
         while(!line.equals("bye")){
             if(line.equals("list")){
                 System.out.println("____________________________________________________________");
-                for(int i=0; i<listCount; i++) {
-                    System.out.println((i + 1) + ". " + list[i]);
+                System.out.println("Here are the tasks in your list:");
+                for(int i=0; i<taskCount; i++) {
+                    System.out.print((i + 1) + ".");
+                    tasks[i].printTask();
                 }
-                if(listCount==0){
+                if(taskCount==0){
                     System.out.println("Empty List");
 
                 }
                 System.out.println("____________________________________________________________");
+            } else if(line.indexOf("done") != -1){
+                line = line.substring(4).trim();
+                int taskNumber = Integer.parseInt(line);
+                if(taskNumber<=taskCount){
+                    tasks[taskNumber-1].markAsDone();
+                    System.out.println("Nice! I've marked this task as done:");
+                    System.out.print("  ");
+                    tasks[taskNumber-1].printTask();
+                }  else{
+                    System.out.println("Invalid \"done\" command!");
+
+                }
             } else {
-                list[listCount] = line;
-                listCount++;
+                tasks[taskCount] = new Task(line);
+                taskCount++;
                 System.out.println("____________________________________________________________");
                 System.out.println("added: " + line);
                 System.out.println("____________________________________________________________");
