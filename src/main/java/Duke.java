@@ -3,13 +3,11 @@ import java.util.Scanner;
 public class Duke {
     private static String userInput;
     private static String command;
-    private static String details = "pol";
-    private static String by;
-    private static String at;
+    private static String details;
+    private static String dateTime;
 
 
     private static int charIndex;
-
     private static int taskCount = 0;
     private static Task[] tasks = new Task[100];
 
@@ -31,7 +29,7 @@ public class Duke {
         userInput = in.nextLine();
 
         while(!userInput.equals("bye")){
-            //Splits command into 2 separate strings
+            //Split command into 2 separate strings "command" and "details"
             charIndex = userInput.indexOf(' ');
             if(charIndex ==-1){ // Catch for single word input eg "list"
                 command = userInput;
@@ -74,32 +72,30 @@ public class Duke {
 
     private static void event() {
         charIndex = details.indexOf("/at");
-        if(charIndex==-1){ // Catch for single word input eg "list"
+        if(charIndex==-1){ // Catch for invalid event command
             System.out.println("INVALID. No \"/at\" in command");
             return;
         } else {
-            at = details.substring(charIndex+3).trim();
+            dateTime = details.substring(charIndex+3).trim();
             details = details.substring(0, charIndex).trim();
         }
-
-        tasks[taskCount] = new Event(details, at);
+        tasks[taskCount] = new Event(details, dateTime);
         taskCount++;
-        addPrint();
+        addingText();
     }
 
     private static void deadline() {
         charIndex = details.indexOf("/by");
-        if(charIndex==-1){ // Catch for single word input eg "list"
+        if(charIndex==-1){ // Catch for invalid deadline command
             System.out.println("INVALID. No \"/by\" in command");
             return;
         } else {
-            by = details.substring(charIndex+3).trim();
+            dateTime = details.substring(charIndex+3).trim();
             details = details.substring(0, charIndex).trim();
         }
-
-        tasks[taskCount] = new Deadline(details, by);
+        tasks[taskCount] = new Deadline(details, dateTime);
         taskCount++;
-        addPrint();
+        addingText();
     }
 
     public static void list(){
@@ -120,23 +116,25 @@ public class Duke {
     private static void todo() {
         tasks[taskCount] = new Todo(details);
         taskCount++;
-        addPrint();
+        addingText();
     }
 
     private static void done() {
         int taskNumber = Integer.parseInt(details);
         if(taskNumber<=taskCount){
-            tasks[taskNumber-1].markAsDone();
-            System.out.println("Nice! I've marked this task as done:");
-            System.out.print("  ");
-            tasks[taskNumber-1].printTask();
+            if(tasks[taskNumber-1].markAsDone()) { // Returns true if task has not been marked before
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.print("  ");
+                tasks[taskNumber - 1].printTask();
+            } else {
+                System.out.println("Task has been marked as done before");
+            }
         }  else{
             System.out.println("Invalid \"done\" command!");
-
         }
     }
 
-    private static void addPrint(){
+    private static void addingText(){ // Text to be printed when adding a new task
         System.out.println("____________________________________________________________");
         System.out.println("Got it. I've added this task:");
         System.out.print("  ");
