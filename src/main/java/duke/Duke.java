@@ -1,5 +1,11 @@
-import exceptions.IncompleteCommandException;
-import exceptions.UnknownCommandException;
+package duke;
+
+import duke.exceptions.IncompleteCommandException;
+import duke.exceptions.UnknownCommandException;
+import duke.tasks.Deadline;
+import duke.tasks.Event;
+import duke.tasks.Task;
+import duke.tasks.Todo;
 
 import java.util.Scanner;
 
@@ -25,7 +31,7 @@ public class Duke {
 
 
         System.out.println(lineSpace);
-        System.out.println("Hello! I'm Duke");
+        System.out.println("Hello! I'm duke.Duke");
         System.out.println("What can I do for you?");
         System.out.println(lineSpace);
 
@@ -128,7 +134,7 @@ public class Duke {
 
     public static void list(){
         System.out.println(lineSpace);
-        System.out.println("Here are the tasks in your list:");
+        System.out.println("Here are the duke.tasks in your list:");
         for(int i=0; i<taskCount; i++) {
             System.out.print((i + 1) + ".");
             tasks[i].printTask();
@@ -161,7 +167,7 @@ public class Duke {
                     System.out.print("  ");
                     tasks[taskNumber - 1].printTask();
                 } else {
-                    System.out.println("Task has been marked as done already!");
+                    System.out.println("duke.tasks.Task has been marked as done already!");
                 }
             }  else{
                 System.out.println("Invalid \"done\" command!");
@@ -177,7 +183,7 @@ public class Duke {
         System.out.println("Got it. I've added this task:");
         System.out.print("  ");
         tasks[taskCount-1].printTask();
-        System.out.println("Now you have " + taskCount + (taskCount<=1? " task ": " tasks ") +"in the list.");
+        System.out.println("Now you have " + taskCount + (taskCount<=1? " task ": "duke/tasks ") +"in the list.");
         System.out.println(lineSpace);
     }
 
