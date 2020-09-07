@@ -89,6 +89,8 @@ public class Duke {
         charIndex = details.indexOf("/at");
         if(charIndex==-1){ // Catch for invalid event command
             System.out.println("INVALID. No \"/at\" in command");
+            System.out.println("Format is: ");
+            System.out.println("event {event name} /at {event time}");
             return;
         } else {
             dateTime = details.substring(charIndex+3).trim();
@@ -103,6 +105,8 @@ public class Duke {
         charIndex = details.indexOf("/by");
         if(charIndex==-1){ // Catch for invalid deadline command
             System.out.println("INVALID. No \"/by\" in command");
+            System.out.println("Format is: ");
+            System.out.println("deadline {deadline name} /by {deadline time}");
             return;
         } else {
             dateTime = details.substring(charIndex+3).trim();
@@ -148,16 +152,22 @@ public class Duke {
             System.out.println("No task have been added yet!");
             return;
         }
-        int taskNumber = Integer.parseInt(details);
-        if(taskNumber<=taskCount){
-            if(tasks[taskNumber-1].markAsDone()) { // Returns true if task has not been marked before
-                System.out.println("Nice! I've marked this task as done:");
-                System.out.print("  ");
-                tasks[taskNumber - 1].printTask();
-            } else {
-                System.out.println("Task has been marked as done already!");
+        try {
+            int taskNumber = Integer.parseInt(details);
+
+            if(taskNumber<=taskCount && !(taskNumber<0)){
+                if(tasks[taskNumber-1].markAsDone()) { // Returns true if task has not been marked before
+                    System.out.println("Nice! I've marked this task as done:");
+                    System.out.print("  ");
+                    tasks[taskNumber - 1].printTask();
+                } else {
+                    System.out.println("Task has been marked as done already!");
+                }
+            }  else{
+                System.out.println("Invalid \"done\" command!");
+                System.out.println("Only " + taskCount + " task have been added!");
             }
-        }  else{
+        } catch (NumberFormatException e) {
             System.out.println("Invalid \"done\" command!");
         }
     }
