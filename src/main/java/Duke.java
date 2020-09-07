@@ -1,33 +1,42 @@
 import java.util.Scanner;
 
 public class Duke {
+    private static final String lineSpace = "____________________________________________________________";
+
     private static String userInput;
     private static String command;
     private static String details;
     private static String dateTime;
-
 
     private static int charIndex;
     private static int taskCount = 0;
     private static Task[] tasks = new Task[100];
 
     public static void main(String[] args) {
-//        String logo = " ____        _        \n"
-//                + "|  _ \\ _   _| | _____ \n"
-//                + "| | | | | | | |/ / _ \\\n"
-//                + "| |_| | |_| |   <  __/\n"
-//                + "|____/ \\__,_|_|\\_\\___|\n";
-//        System.out.println("Hello from\n" + logo);
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+        System.out.println("Hello from\n" + logo);
 
 
-        System.out.println("____________________________________________________________");
+        System.out.println(lineSpace);
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
-        System.out.println("____________________________________________________________");
+        System.out.println(lineSpace);
 
         Scanner in = new Scanner(System.in);
         userInput = in.nextLine();
 
+        echoCheck(in);
+
+        System.out.println(lineSpace);
+        System.out.println("Bye. Hope to see you again soon!");
+        System.out.println(lineSpace);
+    }
+
+    private static void echoCheck(Scanner in) {
         while(!userInput.equals("bye")){
             //Split command into 2 separate strings "command" and "details"
             charIndex = userInput.indexOf(' ');
@@ -57,17 +66,13 @@ public class Duke {
             default:
                 tasks[taskCount] = new Task(userInput);
                 taskCount++;
-                System.out.println("____________________________________________________________");
+                System.out.println(lineSpace);
                 System.out.println("added: " + userInput);
-                System.out.println("____________________________________________________________");
+                System.out.println(lineSpace);
                 break;
             }
             userInput = in.nextLine();
         }
-
-        System.out.println("____________________________________________________________");
-        System.out.println("Bye. Hope to see you again soon!");
-        System.out.println("____________________________________________________________");
     }
 
     private static void event() {
@@ -81,7 +86,7 @@ public class Duke {
         }
         tasks[taskCount] = new Event(details, dateTime);
         taskCount++;
-        addingText();
+        addText();
     }
 
     private static void deadline() {
@@ -95,11 +100,11 @@ public class Duke {
         }
         tasks[taskCount] = new Deadline(details, dateTime);
         taskCount++;
-        addingText();
+        addText();
     }
 
     public static void list(){
-        System.out.println("____________________________________________________________");
+        System.out.println(lineSpace);
         System.out.println("Here are the tasks in your list:");
         for(int i=0; i<taskCount; i++) {
             System.out.print((i + 1) + ".");
@@ -109,14 +114,14 @@ public class Duke {
             System.out.println("Empty List");
 
         }
-        System.out.println("____________________________________________________________");
+        System.out.println(lineSpace);
     }
 
 
     private static void todo() {
         tasks[taskCount] = new Todo(details);
         taskCount++;
-        addingText();
+        addText();
     }
 
     private static void done() {
@@ -134,12 +139,16 @@ public class Duke {
         }
     }
 
-    private static void addingText(){ // Text to be printed when adding a new task
-        System.out.println("____________________________________________________________");
+    private static void addText(){ // Text to be printed when adding a new task
+        System.out.println(lineSpace);
         System.out.println("Got it. I've added this task:");
         System.out.print("  ");
         tasks[taskCount-1].printTask();
         System.out.println("Now you have " + taskCount + (taskCount<=1? " task ": " tasks ") +"in the list.");
-        System.out.println("____________________________________________________________");
+        System.out.println(lineSpace);
+    }
+
+    private static void introText(){
+
     }
 }
