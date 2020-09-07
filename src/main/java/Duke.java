@@ -1,3 +1,6 @@
+import exceptions.IncompleteCommandException;
+import exceptions.UnknownCommandException;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -27,21 +30,34 @@ public class Duke {
         System.out.println(lineSpace);
 
         Scanner in = new Scanner(System.in);
-        userInput = in.nextLine();
+        userInput = in.nextLine().trim();
 
-        echoCheck(in);
-
+        while(!userInput.equals("bye")) {
+            try {
+                inputDecider();
+            } catch (IncompleteCommandException e) {
+                System.out.println("Whoopsie Daisies! You have an empty description for " + command);
+                System.out.println("Try again:");
+            } catch (UnknownCommandException e) {
+                System.out.println("Whoopsie Daisies! You have entered an unknown command!");
+                System.out.println("What the heck is \'" + command + "\'?");
+                printHelp();
+            }
+            userInput = in.nextLine().trim();
+        }
         System.out.println(lineSpace);
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println(lineSpace);
     }
 
-    private static void echoCheck(Scanner in) {
-        while(!userInput.equals("bye")){
+    private static void inputDecider() throws IncompleteCommandException, UnknownCommandException {
             //Split command into 2 separate strings "command" and "details"
             charIndex = userInput.indexOf(' ');
-            if(charIndex ==-1){ // Catch for single word input eg "list"
+            if(charIndex ==-1){ // Catch for single word input eg "list" or incomplete command
                 command = userInput;
+                if(command.equals("todo") || command.equals("deadline") || command.equals("event")){
+                    throw new IncompleteCommandException();
+                }
             } else {
                 command = userInput.substring(0, charIndex).trim();
                 details = userInput.substring(charIndex +1).trim();
@@ -64,16 +80,10 @@ public class Duke {
                 event();
                 break;
             default:
-                tasks[taskCount] = new Task(userInput);
-                taskCount++;
-                System.out.println(lineSpace);
-                System.out.println("added: " + userInput);
-                System.out.println(lineSpace);
-                break;
+                throw new UnknownCommandException();
             }
-            userInput = in.nextLine();
-        }
     }
+
 
     private static void event() {
         charIndex = details.indexOf("/at");
@@ -102,6 +112,15 @@ public class Duke {
         taskCount++;
         addText();
     }
+    public static void printHelp(){
+        System.out.println("Available commands are:");
+        System.out.println("1) list");
+        System.out.println("2) todo");
+        System.out.println("3) deadline");
+        System.out.println("4) event");
+        System.out.println("5) done");
+        System.out.println("6) bye");
+    }
 
     public static void list(){
         System.out.println(lineSpace);
@@ -125,6 +144,10 @@ public class Duke {
     }
 
     private static void done() {
+        if(taskCount == 0){
+            System.out.println("No task have been added yet!");
+            return;
+        }
         int taskNumber = Integer.parseInt(details);
         if(taskNumber<=taskCount){
             if(tasks[taskNumber-1].markAsDone()) { // Returns true if task has not been marked before
@@ -132,7 +155,7 @@ public class Duke {
                 System.out.print("  ");
                 tasks[taskNumber - 1].printTask();
             } else {
-                System.out.println("Task has been marked as done before");
+                System.out.println("Task has been marked as done already!");
             }
         }  else{
             System.out.println("Invalid \"done\" command!");
