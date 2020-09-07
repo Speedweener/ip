@@ -183,7 +183,7 @@ public class Duke {
         System.out.println("Got it. I've added this task:");
         System.out.print("  ");
         tasks[taskCount-1].printTask();
-        System.out.println("Now you have " + taskCount + (taskCount<=1? " task ": "duke/tasks ") +"in the list.");
+        System.out.println("Now you have " + taskCount + (taskCount<=1? " task ": " tasks ") +"in the list.");
         System.out.println(lineSpace);
     }
 
