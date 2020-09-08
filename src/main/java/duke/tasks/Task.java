@@ -22,8 +22,5 @@ public abstract class Task {
     }
 
 
-    public void printTask() {
-        System.out.println("[" + this.getStatusIcon() + "] " +this.description);
-    }
-
+    public abstract void printTask();
 }

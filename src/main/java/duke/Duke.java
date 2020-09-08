@@ -48,6 +48,8 @@ public class Duke {
                 System.out.println("Whoopsie Daisies! You have entered an unknown command!");
                 System.out.println("What the heck is \'" + command + "\'?");
                 printHelp();
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid \"done\" command!");
             }
             userInput = in.nextLine().trim();
         }
@@ -101,6 +103,10 @@ public class Duke {
         } else {
             dateTime = details.substring(charIndex+3).trim();
             details = details.substring(0, charIndex).trim();
+            if(dateTime.isEmpty() || details.isEmpty()) {
+                System.out.println("Blank name or time for event! Please Retry:");
+                return;
+            }
         }
         tasks[taskCount] = new Event(details, dateTime);
         taskCount++;
@@ -117,6 +123,11 @@ public class Duke {
         } else {
             dateTime = details.substring(charIndex+3).trim();
             details = details.substring(0, charIndex).trim();
+
+            if(dateTime.isEmpty() || details.isEmpty()){
+                System.out.println("Blank name or time for deadline! Please Retry:");
+                return;
+            }
         }
         tasks[taskCount] = new Deadline(details, dateTime);
         taskCount++;
@@ -134,7 +145,7 @@ public class Duke {
 
     public static void list(){
         System.out.println(lineSpace);
-        System.out.println("Here are the duke.tasks in your list:");
+        System.out.println("Here are the tasks in your list:");
         for(int i=0; i<taskCount; i++) {
             System.out.print((i + 1) + ".");
             tasks[i].printTask();
@@ -158,25 +169,22 @@ public class Duke {
             System.out.println("No task have been added yet!");
             return;
         }
-        try {
-            int taskNumber = Integer.parseInt(details);
+        int taskNumber = Integer.parseInt(details);
 
-            if(taskNumber<=taskCount && !(taskNumber<0)){
-                if(tasks[taskNumber-1].markAsDone()) { // Returns true if task has not been marked before
-                    System.out.println("Nice! I've marked this task as done:");
-                    System.out.print("  ");
-                    tasks[taskNumber - 1].printTask();
-                } else {
-                    System.out.println("duke.tasks.Task has been marked as done already!");
-                }
-            }  else{
-                System.out.println("Invalid \"done\" command!");
-                System.out.println("Only " + taskCount + " task have been added!");
+        if(taskNumber<=taskCount && !(taskNumber<0)){
+            if(tasks[taskNumber-1].markAsDone()) { // Returns true if task has not been marked before
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.print("  ");
+                tasks[taskNumber - 1].printTask();
+            } else {
+                System.out.println("Task has been marked as done already!");
             }
-        } catch (NumberFormatException e) {
+        }  else{
             System.out.println("Invalid \"done\" command!");
+            System.out.println("Only " + taskCount + " task have been added!");
         }
     }
+
 
     private static void addText(){ // Text to be printed when adding a new task
         System.out.println(lineSpace);
