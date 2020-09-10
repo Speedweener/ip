@@ -22,15 +22,15 @@ public class Duke {
         int taskCount = 0;
         Task[] tasks = new Task[100];
 
-        while(!line.equals("bye")){
-            if(line.equals("list")){
+        while(!line.equals("bye")) {
+            if(line.equals("list")) {
                 System.out.println("____________________________________________________________");
                 System.out.println("Here are the tasks in your list:");
                 for(int i=0; i<taskCount; i++) {
                     System.out.print((i + 1) + ".");
                     tasks[i].printTask();
                 }
-                if(taskCount==0){
+                if(taskCount==0) {
                     System.out.println("Empty List");
 
                 }
@@ -45,7 +45,6 @@ public class Duke {
                     tasks[taskNumber-1].printTask();
                 }  else{
                     System.out.println("Invalid \"done\" command!");
-
                 }
             } else {
                 tasks[taskCount] = new Task(line);
@@ -56,7 +55,6 @@ public class Duke {
             }
             line = in.nextLine();
         }
-
         System.out.println("____________________________________________________________");
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println("____________________________________________________________");
