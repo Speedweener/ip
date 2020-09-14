@@ -78,6 +78,7 @@ public class Duke {
             try {
                 f.getParentFile().mkdirs();
                 f.createNewFile();
+                return;
             } catch (IOException a) {
                 System.out.println(lineSpace);
                 System.out.println("Unable to create list on your system!");
