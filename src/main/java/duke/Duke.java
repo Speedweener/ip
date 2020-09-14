@@ -6,6 +6,8 @@ import duke.tasks.Deadline;
 import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.Todo;
+import java.util.ArrayList;
+
 
 import java.util.Scanner;
 
@@ -19,7 +21,7 @@ public class Duke {
 
     private static int charIndex;
     private static int taskCount = 0;
-    private static Task[] tasks = new Task[100];
+    private static ArrayList<Task> tasks = new ArrayList<>();
 
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -49,7 +51,7 @@ public class Duke {
                 System.out.println("What the heck is \'" + command + "\'?");
                 printHelp();
             } catch (NumberFormatException e) {
-                System.out.println("Invalid \"done\" command!");
+                System.out.println("Invalid \"done/delete\" command!");
             }
             userInput = in.nextLine().trim();
         }
@@ -87,9 +89,38 @@ public class Duke {
             case "event":
                 event();
                 break;
+
+            case "delete":
+                delete();
+                break;
             default:
                 throw new UnknownCommandException();
             }
+    }
+
+    private static void delete() {
+        if(taskCount == 0){
+            System.out.println("List is empty!");
+            return;
+        }
+        int taskNumber = Integer.parseInt(details);
+
+        if(taskNumber<=taskCount && !(taskNumber<0)){
+            if(tasks.get(taskNumber-1).markAsDone()) { // Returns true if task has not been marked before
+                System.out.println("Noted. I've removed this task:");
+                System.out.print("  ");
+                tasks.get(taskNumber-1).printTask();
+                tasks.remove(taskNumber-1);
+                taskCount -= 1;
+                System.out.println("Now you have " + taskCount +" tasks in the list.");
+            } else {
+                System.out.println("Task has been marked as done already!");
+            }
+        }  else{
+            System.out.println("Invalid \"delete\" command!");
+            System.out.println("Only " + taskCount + " task are in the list!");
+        }
+
     }
 
 
@@ -108,7 +139,7 @@ public class Duke {
                 return;
             }
         }
-        tasks[taskCount] = new Event(details, dateTime);
+        tasks.add(new Event(details, dateTime));
         taskCount++;
         addText();
     }
@@ -129,11 +160,11 @@ public class Duke {
                 return;
             }
         }
-        tasks[taskCount] = new Deadline(details, dateTime);
+        tasks.add(new Deadline(details, dateTime));
         taskCount++;
         addText();
     }
-    public static void printHelp(){
+    public static void printHelp() {
         System.out.println("Available commands are:");
         System.out.println("1) list");
         System.out.println("2) todo");
@@ -143,12 +174,12 @@ public class Duke {
         System.out.println("6) bye");
     }
 
-    public static void list(){
+    public static void list() {
         System.out.println(lineSpace);
         System.out.println("Here are the tasks in your list:");
         for(int i=0; i<taskCount; i++) {
             System.out.print((i + 1) + ".");
-            tasks[i].printTask();
+            tasks.get(i).printTask();
         }
         if(taskCount==0){
             System.out.println("Empty List");
@@ -159,23 +190,23 @@ public class Duke {
 
 
     private static void todo() {
-        tasks[taskCount] = new Todo(details);
+        tasks.add(new Todo(details));
         taskCount++;
         addText();
     }
 
     private static void done() {
         if(taskCount == 0){
-            System.out.println("No task have been added yet!");
+            System.out.println("List is empty!");
             return;
         }
         int taskNumber = Integer.parseInt(details);
 
         if(taskNumber<=taskCount && !(taskNumber<0)){
-            if(tasks[taskNumber-1].markAsDone()) { // Returns true if task has not been marked before
+            if(tasks.get(taskNumber-1).markAsDone()) { // Returns true if task has not been marked before
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.print("  ");
-                tasks[taskNumber - 1].printTask();
+                tasks.get(taskNumber-1).printTask();
             } else {
                 System.out.println("Task has been marked as done already!");
             }
@@ -186,16 +217,16 @@ public class Duke {
     }
 
 
-    private static void addText(){ // Text to be printed when adding a new task
+    private static void addText() { // Text to be printed when adding a new task
         System.out.println(lineSpace);
         System.out.println("Got it. I've added this task:");
         System.out.print("  ");
-        tasks[taskCount-1].printTask();
+        tasks.get(taskCount-1).printTask();
         System.out.println("Now you have " + taskCount + (taskCount<=1? " task ": " tasks ") +"in the list.");
         System.out.println(lineSpace);
     }
 
-    private static void introText(){
+    private static void introText() {
 
     }
 }
