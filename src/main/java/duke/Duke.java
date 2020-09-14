@@ -7,6 +7,11 @@ import duke.tasks.Event;
 import duke.tasks.Task;
 import duke.tasks.Todo;
 
+import java.io.FileWriter;
+import java.io.File;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Duke {
@@ -16,6 +21,7 @@ public class Duke {
     private static String command;
     private static String details;
     private static String dateTime;
+    private static String filePath;
 
     private static int charIndex;
     private static int taskCount = 0;
@@ -29,9 +35,9 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
 
-
+        loadList();
         System.out.println(lineSpace);
-        System.out.println("Hello! I'm duke.Duke");
+        System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
         System.out.println(lineSpace);
 
@@ -56,6 +62,95 @@ public class Duke {
         System.out.println(lineSpace);
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println(lineSpace);
+    }
+
+    private static void loadList() {
+        File f = new File("data/list.txt");
+        filePath = f.getAbsolutePath();
+        System.out.println("Loading previous list on your system . . . ");
+        Scanner s = null; // create a Scanner using the File as the source
+        try {
+            s = new Scanner(f);
+        } catch (FileNotFoundException e) {
+            System.out.println("Existing list not found. Creating new list");
+            try {
+                f.getParentFile().mkdirs();
+                f.createNewFile();
+            } catch (IOException a) {
+                System.out.println(lineSpace);
+                System.out.println("Unable to create list on your system!");
+                System.out.println("List will not be remembered after the app is ended.");
+                System.out.println(lineSpace);
+            }
+        }
+
+        while (s.hasNext()) {
+            lineDecipher(s.nextLine());
+        }
+
+        list();
+    }
+
+    private static void overwriteList(String filePath) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        fw.write(listToString());
+        fw.close();
+    }
+
+    private static void appendList(String filePath, String textToAppend) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
+        fw.write(textToAppend);
+        fw.close();
+    }
+
+    private static void lineDecipher(String lineData) {
+        String[] parts = lineData.split("\\|");
+        switch(parts[0].trim()) {
+        case "T":
+            if(parts.length<3) {
+                System.out.println("Invalid Todo task!");
+                break;
+            }
+            tasks[taskCount] = new Todo(parts[2].trim());
+            if(parts[1].trim().equals("1")) {
+                tasks[taskCount].markAsDone();
+            }
+            taskCount++;
+            break;
+        case "D":
+            if(parts.length<4) {
+                System.out.println("Invalid Deadline task!");
+                break;
+            }
+            tasks[taskCount] = new Deadline(parts[2].trim(), parts[3].trim());
+            if(parts[1].trim().equals("1")) {
+                tasks[taskCount].markAsDone();
+            }
+            taskCount++;
+            break;
+        case "E":
+            if(parts.length<4) {
+                System.out.println("Invalid Event task!");
+                break;
+            }
+            tasks[taskCount] = new Event(parts[2].trim(), parts[3].trim());
+            if(parts[1].trim().equals("1")) {
+                tasks[taskCount].markAsDone();
+            }
+            taskCount++;
+            break;
+        default:
+            System.out.println("INVALID TASK DETECTED!");
+            break;
+        }
+    }
+
+    private static String listToString() {
+        String listString = "";
+        for(int i = 0; i<taskCount; i++) {
+            listString = listString.concat(tasks[i].toString()+System.lineSeparator());
+        }
+        return listString;
     }
 
     private static void inputDecider() throws IncompleteCommandException, UnknownCommandException {
@@ -111,6 +206,11 @@ public class Duke {
         tasks[taskCount] = new Event(details, dateTime);
         taskCount++;
         addText();
+        try {
+            appendList(filePath, tasks[taskCount-1].saveString(details, dateTime));
+        } catch (IOException e) {
+            System.out.println("Unable to save changes to local list: " +  e.getMessage());
+        }
     }
 
     private static void deadline() {
@@ -132,6 +232,12 @@ public class Duke {
         tasks[taskCount] = new Deadline(details, dateTime);
         taskCount++;
         addText();
+        try {
+            appendList(filePath, tasks[taskCount-1].saveString(details, dateTime));
+        } catch (IOException e) {
+            System.out.println("Unable to save changes to local list: " +  e.getMessage());
+        }
+
     }
     public static void printHelp(){
         System.out.println("Available commands are:");
@@ -162,6 +268,11 @@ public class Duke {
         tasks[taskCount] = new Todo(details);
         taskCount++;
         addText();
+        try {
+            appendList(filePath, tasks[taskCount-1].saveString(details, dateTime));
+        } catch (IOException e) {
+            System.out.println("Unable to save changes to local list: " +  e.getMessage());
+        }
     }
 
     private static void done() {
@@ -176,6 +287,11 @@ public class Duke {
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.print("  ");
                 tasks[taskNumber - 1].printTask();
+                try {
+                    overwriteList(filePath);
+                } catch (IOException e) {
+                    System.out.println("Unable to save changes to local list: " +  e.getMessage());
+                }
             } else {
                 System.out.println("Task has been marked as done already!");
             }

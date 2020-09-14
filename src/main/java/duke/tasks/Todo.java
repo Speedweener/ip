@@ -12,4 +12,16 @@ public class Todo extends Task {
         System.out.println("[T]" + "[" + this.getStatusIcon() + "] " +this.description);
     }
 
+    @Override
+    public String saveString(String details, String dateTime) {
+        return System.lineSeparator() + "T | 0 | "
+                + details;
+    }
+
+    @Override
+    public String toString() {
+        return  "T | " + (isDone? 1:0) + " | " + description;
+    }
+
+
 }

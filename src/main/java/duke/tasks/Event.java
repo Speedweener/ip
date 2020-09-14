@@ -14,4 +14,16 @@ public class Event extends Task {
                 + String.format(" (at: %s)", at));
     }
 
+    @Override
+    public String saveString(String details, String dateTime) {
+        return System.lineSeparator() + "E | 0 | "
+                + details + " | " + dateTime;
+    }
+
+    @Override
+    public String toString() {
+        return  "E | " + (isDone? 1:0) + " | " + description + " | " + at;
+    }
+
+
 }
