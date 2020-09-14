@@ -51,7 +51,7 @@ public class Duke {
                 System.out.println("What the heck is \'" + command + "\'?");
                 printHelp();
             } catch (NumberFormatException e) {
-                System.out.println("Invalid \"done\" command!");
+                System.out.println("Invalid \"done/delete\" command!");
             }
             userInput = in.nextLine().trim();
         }
@@ -89,9 +89,38 @@ public class Duke {
             case "event":
                 event();
                 break;
+
+            case "delete":
+                delete();
+                break;
             default:
                 throw new UnknownCommandException();
             }
+    }
+
+    private static void delete() {
+        if(taskCount == 0){
+            System.out.println("List is empty!");
+            return;
+        }
+        int taskNumber = Integer.parseInt(details);
+
+        if(taskNumber<=taskCount && !(taskNumber<0)){
+            if(tasks.get(taskNumber-1).markAsDone()) { // Returns true if task has not been marked before
+                System.out.println("Noted. I've removed this task:");
+                System.out.print("  ");
+                tasks.get(taskNumber-1).printTask();
+                tasks.remove(taskNumber-1);
+                taskCount -= 1;
+                System.out.println("Now you have " + taskCount +" tasks in the list.");
+            } else {
+                System.out.println("Task has been marked as done already!");
+            }
+        }  else{
+            System.out.println("Invalid \"delete\" command!");
+            System.out.println("Only " + taskCount + " task are in the list!");
+        }
+
     }
 
 
@@ -168,7 +197,7 @@ public class Duke {
 
     private static void done() {
         if(taskCount == 0){
-            System.out.println("No task have been added yet!");
+            System.out.println("List is empty!");
             return;
         }
         int taskNumber = Integer.parseInt(details);
