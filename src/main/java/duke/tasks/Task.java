@@ -23,4 +23,7 @@ public abstract class Task {
 
 
     public abstract void printTask();
+    public abstract String saveString(String details, String dateTime);
+    public abstract String toString();
+
 }

@@ -14,4 +14,16 @@ public class Deadline extends Task {
         System.out.println("[D]" + "[" + this.getStatusIcon() + "] " + this.description
         + String.format(" (by: %s)", by));
     }
+
+    @Override
+    public String saveString(String details, String dateTime) {
+        return System.lineSeparator() + "D | 0 | "
+                + details + " | " + dateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "D | " + (isDone? 1:0) +" | " + description + " | " + by;
+    }
+
 }
