@@ -2,51 +2,47 @@ package duke.tasks;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Storage {
-    private static String filePath;
-    private static int taskCount;
+    private int taskCount = 0;
+    private File f;
+    private ArrayList<Task> tasks = new ArrayList<>();
+    private String fullFilePath;
 
-    private static  ArrayList<Task> tasks = new ArrayList<>();
-
-    private static final String lineSpace = "____________________________________________________________";
-
-    public Storage (String filePath, ArrayList<Task> tasks) {
-        this.filePath = filePath;
-        this.tasks = tasks;
+    public Storage(String filePath) {
+        f = new File(filePath);
+        fullFilePath = f.getAbsolutePath();
     }
-    public static void loadList() {
-        File f = new File("data/list.txt");
-        filePath = f.getAbsolutePath();
-        System.out.println(f.getAbsolutePath());
-        System.out.println("Loading previous list on your system . . . ");
+
+    public ArrayList<Task> readFromFile() {
+        System.out.println("Loading previous list on your system from: ");
+        System.out.println(fullFilePath);
+
         Scanner s = null; // create a Scanner using the File as the source
         try {
             s = new Scanner(f);
         } catch (FileNotFoundException e) {
-            System.out.println("Existing list not found. Creating new list");
+            System.out.println(Messages.MESSAGE_FILE_NOT_FOUND);
             try {
                 f.getParentFile().mkdirs();
                 f.createNewFile();
-                return;
+                return new ArrayList<>();
             } catch (IOException a) {
-                System.out.println(lineSpace);
-                System.out.println("Unable to create list on your system!");
-                System.out.println("List will not be remembered after the app is ended.");
-                System.out.println(lineSpace);
+                System.out.println(Messages.MESSAGE_IO_INITIALIZE_ERROR);
             }
         }
         while (s.hasNext()) {
-            lineDecipher(s.nextLine());
+            lineDecipher(s.nextLine(), tasks);
         }
-        TaskHelper.list();
+        return tasks;
     }
 
 
-    private static void lineDecipher(String lineData) {
+    private void lineDecipher(String lineData, ArrayList<Task> tasks) {
         String[] parts = lineData.split("\\|");
         switch (parts[0].trim()) {
         case "T":
@@ -87,5 +83,26 @@ public class Storage {
             break;
         }
     }
+
+    public void overwriteList(ArrayList<Task> tasks) throws IOException {
+        FileWriter fw = new FileWriter(fullFilePath);
+        fw.write(listToString(tasks));
+        fw.close();
+    }
+
+    public void appendList(String textToAppend) throws IOException {
+        FileWriter fw = new FileWriter(fullFilePath, true); // create a FileWriter in append mode
+        fw.write(textToAppend);
+        fw.close();
+    }
+
+    private String listToString(ArrayList<Task> tasks) {
+        String listString = "";
+        for (int i=0; i<taskCount; i++) {
+            listString = listString.concat(tasks.get(i).toString() + System.lineSeparator());
+        }
+        return listString;
+    }
+
 
 }

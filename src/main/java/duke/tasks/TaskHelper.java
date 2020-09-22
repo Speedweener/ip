@@ -10,88 +10,22 @@ import java.util.Scanner;
 public class TaskHelper {
 
     private static final String lineSpace = "____________________________________________________________";
-    private static final ArrayList<Task> tasks = new ArrayList<>();
-    private static int charIndex;
-    private static int taskCount = 0;
-    private static String filePath;
+    private ArrayList<Task> tasks = new ArrayList<>();
+    private int charIndex;
+    private int taskCount;
+    private String fullFilePath;
+    private String pathName;
+    private Storage storage;
 
 
-
-
-
-    public static void loadList() {
-        File f = new File("data/list.txt");
-        filePath = f.getAbsolutePath();
-        System.out.println(f.getAbsolutePath());
-        System.out.println("Loading previous list on your system . . . ");
-        Scanner s = null; // create a Scanner using the File as the source
-        try {
-            s = new Scanner(f);
-        } catch (FileNotFoundException e) {
-            System.out.println("Existing list not found. Creating new list");
-            try {
-                f.getParentFile().mkdirs();
-                f.createNewFile();
-                return;
-            } catch (IOException a) {
-                System.out.println(lineSpace);
-                System.out.println("Unable to create list on your system!");
-                System.out.println("List will not be remembered after the app is ended.");
-                System.out.println(lineSpace);
-            }
-        }
-        while (s.hasNext()) {
-            lineDecipher(s.nextLine());
-        }
-        TaskHelper.list();
+    public TaskHelper (ArrayList<Task> tasks, Storage storage) {
+        this.tasks = tasks;
+        taskCount = tasks.size();
+        this.storage = storage;
+        list();
     }
 
-
-    private static void lineDecipher(String lineData) {
-        String[] parts = lineData.split("\\|");
-        switch (parts[0].trim()) {
-        case "T":
-            if (parts.length < 3) {
-                System.out.println("Invalid Todo task!");
-                break;
-            }
-            TaskHelper.tasks.add(new Todo(parts[2].trim()));
-            if (parts[1].trim().equals("1")) {
-                tasks.get(taskCount).markAsDone();
-            }
-            taskCount++;
-            break;
-        case "D":
-            if (parts.length < 4) {
-                System.out.println("Invalid Deadline task!");
-                break;
-            }
-            tasks.add(new Deadline(parts[2].trim(), parts[3].trim()));
-            if (parts[1].trim().equals("1")) {
-                tasks.get(taskCount).markAsDone();
-            }
-            taskCount++;
-            break;
-        case "E":
-            if (parts.length < 4) {
-                System.out.println("Invalid Event task!");
-                break;
-            }
-            tasks.add(new Event(parts[2].trim(), parts[3].trim()));
-            if (parts[1].trim().equals("1")) {
-                tasks.get(taskCount).markAsDone();
-            }
-            taskCount++;
-            break;
-        default:
-            System.out.println("INVALID TASK DETECTED!");
-            break;
-        }
-    }
-
-
-
-    public static void delete(String details) {
+    public void delete(String details) {
         if (taskCount == 0) {
             System.out.println("List is empty!");
             return;
@@ -106,7 +40,7 @@ public class TaskHelper {
             taskCount -= 1;
             System.out.println("Now you have " + taskCount + " tasks in the list.");
             try {
-                overwriteList(filePath);
+                storage.overwriteList(tasks);
             } catch (IOException e) {
                 System.out.println("Unable to save changes to local list: " + e.getMessage());
             }
@@ -116,7 +50,7 @@ public class TaskHelper {
         }
     }
 
-    public static void done(String details) {
+    public void done(String details) {
         if (taskCount == 0) {
             System.out.println("List is empty!");
             return;
@@ -130,7 +64,7 @@ public class TaskHelper {
                 tasks.get(taskNumber - 1).printTask();
                 ;
                 try {
-                    overwriteList(filePath);
+                    storage.overwriteList(tasks);
                 } catch (IOException e) {
                     System.out.println("Unable to save changes to local list: " + e.getMessage());
                 }
@@ -145,18 +79,18 @@ public class TaskHelper {
 
 
 
-    public static void todo(String details, String dateTime) {
+    public void todo(String details, String dateTime) {
         tasks.add(new Todo(details));
         taskCount++;
         addText();
         try {
-            appendList(filePath, tasks.get(taskCount - 1).saveString(details, dateTime));
+            storage.appendList(tasks.get(taskCount - 1).saveString(details, dateTime));
         } catch (IOException e) {
-            System.out.println("Unable to save changes to local list: " + e.getMessage());
+            System.out.println(Messages.MESSAGE_IO_WRITE_ERROR + e.getMessage());
         }
     }
 
-    public static void deadline(String details, String dateTime) {
+    public void deadline(String details, String dateTime) {
         charIndex = details.indexOf("/by");
         if (charIndex == -1) { // Catch for invalid deadline command
             System.out.println("INVALID. No \"/by\" in command");
@@ -176,14 +110,14 @@ public class TaskHelper {
         taskCount++;
         addText();
         try {
-            appendList(filePath, tasks.get(taskCount - 1).saveString(details, dateTime));
+            storage.appendList(tasks.get(taskCount - 1).saveString(details, dateTime));
         } catch (IOException e) {
             System.out.println("Unable to save changes to local list: " + e.getMessage());
         }
 
     }
 
-    public static void event(String details, String dateTime) {
+    public void event(String details, String dateTime) {
         charIndex = details.indexOf("/at");
         if (charIndex == -1) { // Catch for invalid event command
             System.out.println("INVALID. No \"/at\" in command");
@@ -202,13 +136,13 @@ public class TaskHelper {
         taskCount++;
         addText();
         try {
-            appendList(filePath, tasks.get(taskCount - 1).saveString(details, dateTime));
+            storage.appendList(tasks.get(taskCount - 1).saveString(details, dateTime));
         } catch (IOException e) {
             System.out.println("Unable to save changes to local list: " + e.getMessage());
         }
     }
 
-    private static void addText() { // Text to be printed when adding a new task
+    private void addText() { // Text to be printed when adding a new task
         System.out.println(lineSpace);
         System.out.println("Got it. I've added this task:");
         System.out.print("  ");
@@ -217,27 +151,7 @@ public class TaskHelper {
         System.out.println(lineSpace);
     }
 
-    private static void overwriteList(String filePath) throws IOException {
-        FileWriter fw = new FileWriter(filePath);
-        fw.write(listToString());
-        fw.close();
-    }
-
-    private static void appendList(String filePath, String textToAppend) throws IOException {
-        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
-        fw.write(textToAppend);
-        fw.close();
-    }
-
-    private static String listToString() {
-        String listString = "";
-        for (int i=0; i<taskCount; i++) {
-            listString = listString.concat(tasks.get(i).toString() + System.lineSeparator());
-        }
-        return listString;
-    }
-
-    public static void list() {
+    public void list() {
         System.out.println(lineSpace);
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
