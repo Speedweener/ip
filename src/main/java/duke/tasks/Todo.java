@@ -14,8 +14,7 @@ public class Todo extends Task {
 
     @Override
     public String saveString(String details, String dateTime) {
-        return System.lineSeparator() + "T | 0 | "
-                + details;
+        return "T | 0 | " + details + System.lineSeparator();
     }
 
     @Override

@@ -16,8 +16,8 @@ public class Event extends Task {
 
     @Override
     public String saveString(String details, String dateTime) {
-        return System.lineSeparator() + "E | 0 | "
-                + details + " | " + dateTime;
+        return  "E | 0 | " + details + " | " + dateTime
+                + System.lineSeparator();
     }
 
     @Override

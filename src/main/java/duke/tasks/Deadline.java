@@ -17,8 +17,8 @@ public class Deadline extends Task {
 
     @Override
     public String saveString(String details, String dateTime) {
-        return System.lineSeparator() + "D | 0 | "
-                + details + " | " + dateTime;
+        return "D | 0 | " + details + " | " + dateTime +
+                System.lineSeparator();
     }
 
     @Override
