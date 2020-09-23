@@ -37,6 +37,8 @@ public class Parser {
             return new EventCommand(details);
         case "delete":
             return new DeleteCommand(details);
+        case "find":
+            return new FindCommand(details);
         case "bye":
             return new ExitCommand(details);
         default:
@@ -45,7 +47,8 @@ public class Parser {
     }
 
     private static boolean validCommand(String command) {
-        return command.equals("todo") || command.equals("deadline") || command.equals("event");
+        return command.equals("todo") || command.equals("deadline") || command.equals("event")
+        || command.equals("find");
     }
 
 }

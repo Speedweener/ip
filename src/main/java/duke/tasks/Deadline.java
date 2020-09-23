@@ -26,4 +26,9 @@ public class Deadline extends Task {
         return "D | " + (isDone? 1:0) +" | " + description + " | " + by;
     }
 
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
 }

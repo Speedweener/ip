@@ -25,5 +25,7 @@ public abstract class Task {
     public abstract String toString();
     public abstract String saveString(String details, String dateTime);
     public abstract String exportTask();
+    public abstract String getDescription();
+
 
 }
