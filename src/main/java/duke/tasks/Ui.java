@@ -32,6 +32,7 @@ public class Ui {
         printToUser(Messages.MESSAGE_GOODBYE);
     }
 
+
     public String readCommand() throws EmptyCommandException {
         System.out.print(PREFIX + "Awaiting input: ");
         String userInput = in.nextLine().trim();
@@ -56,6 +57,14 @@ public class Ui {
     public void printList(String list) {
         printToUser("Here are the tasks in your list: " + LS + list);
     }
+
+    public void printFiltered(String list, String condition) {
+        printToUser("Here are the tasks in your list that " + condition
+                    + LS + list);
+    }
+
+
+
 
     public void printExit(String ... list) {
         printToUser("EXITING ... ");

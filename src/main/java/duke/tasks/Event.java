@@ -1,9 +1,11 @@
 package duke.tasks;
 
-public class Event extends Task {
-    private String at;
+import java.time.LocalDateTime;
 
-    public Event(String description, String at) {
+public class Event extends Task {
+    private LocalDateTime at;
+
+    public Event(String description, LocalDateTime at) {
         super(description);
         this.at = at;
     }
@@ -11,7 +13,7 @@ public class Event extends Task {
     @Override
     public String toString(){
         return ("[E]" + "[" + this.getStatusIcon() + "] " + this.description
-                + String.format(" (at: %s)", at));
+                + String.format(" (at: %s)", DateTimeValidator.dateTimeToString(at)));
     }
 
     @Override
@@ -22,7 +24,12 @@ public class Event extends Task {
 
     @Override
     public String exportTask() {
-        return  "E | " + (isDone? 1:0) + " | " + description + " | " + at;
+        return  "E | " + (isDone? 1:0) + " | " + description + " | " + DateTimeValidator.dateTimeExport(at);
+    }
+
+    @Override
+    public LocalDateTime getDateTime() {
+        return at;
     }
 
 }

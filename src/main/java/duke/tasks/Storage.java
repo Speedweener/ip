@@ -60,7 +60,11 @@ public class Storage {
                 ui.printToUser("Invalid Deadline task!");
                 break;
             }
-            tasks.add(new Deadline(parts[2].trim(), parts[3].trim()));
+            if (!DateTimeValidator.isValid(parts[3].trim())) {
+                ui.printToUser("Invalid date/time for Deadline task!");
+                break;
+            }
+            tasks.add(new Deadline(parts[2].trim(), DateTimeValidator.stringToDateTime(parts[3].trim())));
             if (parts[1].trim().equals("1")) {
                 tasks.get(taskCount).markAsDone();
             }
@@ -71,7 +75,11 @@ public class Storage {
                 ui.printToUser("Invalid Event task!");
                 break;
             }
-            tasks.add(new Event(parts[2].trim(), parts[3].trim()));
+            if (!DateTimeValidator.isValid(parts[3].trim())) {
+                ui.printToUser("Invalid date/time for Event task!");
+                break;
+            }
+            tasks.add(new Event(parts[2].trim(), DateTimeValidator.stringToDateTime(parts[3].trim())));
             if (parts[1].trim().equals("1")) {
                 tasks.get(taskCount).markAsDone();
             }
