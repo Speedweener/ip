@@ -13,7 +13,7 @@ public class FindCommand extends Command {
     @Override
     public void execute(TaskHelper taskHelper, Ui ui, Storage storage) {
 
-        ui.printList(taskHelper.filterKeyword(description));
+        ui.printFiltered(taskHelper.filterKeyword(description), "match the keyword entered:");
     }
 
 }
