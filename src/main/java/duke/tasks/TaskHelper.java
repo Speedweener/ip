@@ -1,168 +1,159 @@
 package duke.tasks;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class TaskHelper {
 
     private static final String lineSpace = "____________________________________________________________";
+    private static final String LS = System.lineSeparator();
+
     private ArrayList<Task> tasks = new ArrayList<>();
     private int charIndex;
     private int taskCount;
     private String fullFilePath;
     private String pathName;
-    private Storage storage;
 
 
-    public TaskHelper (ArrayList<Task> tasks, Storage storage) {
+    public TaskHelper (ArrayList<Task> tasks) {
         this.tasks = tasks;
         taskCount = tasks.size();
-        this.storage = storage;
-        list();
     }
 
-    public void delete(String details) {
+    public String delete(String details, Storage storage) {
         if (taskCount == 0) {
-            System.out.println("List is empty!");
-            return;
+            return "List is empty!";
         }
         int taskNumber = Integer.parseInt(details);
 
         if (taskNumber <= taskCount && !(taskNumber < 0)) {
-            System.out.println("Noted. I've removed this task:");
-            System.out.print("  ");
-            tasks.get(taskNumber - 1).printTask();
+            String confirmMessage = "Noted. I've removed this task:" + LS
+                               + "\t" + tasks.get(taskNumber - 1).toString();
             tasks.remove(taskNumber - 1);
             taskCount -= 1;
-            System.out.println("Now you have " + taskCount + " tasks in the list.");
+            confirmMessage += LS + "Now you have " + taskCount + " tasks in the list.";
             try {
                 storage.overwriteList(tasks);
             } catch (IOException e) {
-                System.out.println("Unable to save changes to local list: " + e.getMessage());
+                confirmMessage += LS + Messages.MESSAGE_IO_WRITE_ERROR + e.getMessage();
             }
+            return confirmMessage;
         } else {
-            System.out.println("Invalid \"delete\" command!");
-            System.out.println("Only " + taskCount + " task are in the list!");
+            return "Invalid \"delete\" command!"
+                    + LS + "Only " + taskCount + " task are in the list!";
         }
     }
 
-    public void done(String details) {
+    public String done(String details, Storage storage) {
         if (taskCount == 0) {
-            System.out.println("List is empty!");
-            return;
+            return ("List is empty!");
         }
         int taskNumber = Integer.parseInt(details);
 
         if (taskNumber <= taskCount && !(taskNumber < 0)) {
             if (tasks.get(taskNumber - 1).markAsDone()) { // Returns true if task has not been marked before
-                System.out.println("Nice! I've marked this task as done:");
-                System.out.print("  ");
-                tasks.get(taskNumber - 1).printTask();
-                ;
+                String confirmMessage = "Nice! I've marked this task as done:" + LS
+                                       + "\t" + tasks.get(taskNumber - 1).toString();
                 try {
                     storage.overwriteList(tasks);
                 } catch (IOException e) {
-                    System.out.println("Unable to save changes to local list: " + e.getMessage());
+                    confirmMessage += LS + Messages.MESSAGE_IO_WRITE_ERROR + e.getMessage();
                 }
+
+                return confirmMessage;
             } else {
-                System.out.println("Task has been marked as done already!");
+                return ("Task has been marked as done already!");
             }
         } else {
-            System.out.println("Invalid \"done\" command!");
-            System.out.println("Only " + taskCount + " task have been added!");
+            return "Invalid \"done\" command!"
+                   + LS + "Only " + taskCount + " task have been added!";
         }
     }
 
 
 
-    public void todo(String details, String dateTime) {
+    public String todo(String details, Storage storage) {
         tasks.add(new Todo(details));
         taskCount++;
-        addText();
+        String confirmMessage = addText();
         try {
-            storage.appendList(tasks.get(taskCount - 1).saveString(details, dateTime));
+            storage.appendList(tasks.get(taskCount - 1).saveString(details, ""));
         } catch (IOException e) {
-            System.out.println(Messages.MESSAGE_IO_WRITE_ERROR + e.getMessage());
+            confirmMessage = confirmMessage + Messages.MESSAGE_IO_WRITE_ERROR + e.getMessage();
         }
+        return confirmMessage;
     }
 
-    public void deadline(String details, String dateTime) {
+    public String deadline(String details, Storage storage) {
         charIndex = details.indexOf("/by");
+        String dateTime;
         if (charIndex == -1) { // Catch for invalid deadline command
-            System.out.println("INVALID. No \"/by\" in command");
-            System.out.println("Format is: ");
-            System.out.println("deadline {deadline name} /by {deadline time}");
-            return;
+            return ("INVALID. No \"/by\" in command"
+                    + LS +"Format is: "
+                    + LS + "deadline {deadline name} /by {deadline time}");
         } else {
             dateTime = details.substring(charIndex + 3).trim();
             details = details.substring(0, charIndex).trim();
 
             if (dateTime.isEmpty() || details.isEmpty()) {
-                System.out.println("Blank name or time for deadline! Please Retry:");
-                return;
+                return("Blank name or time for deadline! Please Retry:");
             }
         }
         tasks.add(new Deadline(details, dateTime));
         taskCount++;
-        addText();
+        String confirmMessage = addText();
         try {
             storage.appendList(tasks.get(taskCount - 1).saveString(details, dateTime));
         } catch (IOException e) {
-            System.out.println("Unable to save changes to local list: " + e.getMessage());
+            confirmMessage = confirmMessage + LS + Messages.MESSAGE_IO_WRITE_ERROR  + e.getMessage();
         }
+        return confirmMessage;
 
     }
 
-    public void event(String details, String dateTime) {
+    public String event(String details, Storage storage) {
         charIndex = details.indexOf("/at");
+        String dateTime;
         if (charIndex == -1) { // Catch for invalid event command
-            System.out.println("INVALID. No \"/at\" in command");
-            System.out.println("Format is: ");
-            System.out.println("event {event name} /at {event time}");
-            return;
+            return ("INVALID. No \"/at\" in command"
+                    + LS +"Format is: "
+                    + LS + "event {event name} /at {event time}");
         } else {
             dateTime = details.substring(charIndex + 3).trim();
             details = details.substring(0, charIndex).trim();
             if (dateTime.isEmpty() || details.isEmpty()) {
-                System.out.println("Blank name or time for event! Please Retry:");
-                return;
+                return("Blank name or time for event! Please Retry:");
             }
         }
         tasks.add(new Event(details, dateTime));
         taskCount++;
-        addText();
+        String confirmMessage = addText();
         try {
             storage.appendList(tasks.get(taskCount - 1).saveString(details, dateTime));
         } catch (IOException e) {
-            System.out.println("Unable to save changes to local list: " + e.getMessage());
+            confirmMessage = confirmMessage + LS + Messages.MESSAGE_IO_WRITE_ERROR  + e.getMessage();
         }
+        return  confirmMessage;
     }
 
-    private void addText() { // Text to be printed when adding a new task
-        System.out.println(lineSpace);
-        System.out.println("Got it. I've added this task:");
-        System.out.print("  ");
-        tasks.get(taskCount - 1).printTask();
-        System.out.println("Now you have " + taskCount + (taskCount <= 1 ? " task " : " tasks ") + "in the list.");
-        System.out.println(lineSpace);
+    /** Returns text to be printed when adding a new task  */
+    private String addText() {
+        return("Got it. I've added this task:"
+                + LS + "\t" + tasks.get(taskCount - 1).toString()
+                + LS + "Now you have " + taskCount +
+                (taskCount <= 1 ? " task " : " tasks ") + "in the list.");
     }
 
-    public void list() {
-        System.out.println(lineSpace);
-        System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < taskCount; i++) {
-            System.out.print((i + 1) + ".");
-            tasks.get(i).printTask();
-        }
+
+    /** Returns the list as a string */
+    public String list() {
+        String list = "";
         if (taskCount == 0) {
-            System.out.println("Empty List");
-
+            return ("Empty List");
         }
-        System.out.println(lineSpace);
+        for (int i = 0; i < taskCount; i++) {
+           list += (i + 1) + "." + tasks.get(i).toString() + System.lineSeparator();
+        }
+        return list;
     }
 
 }

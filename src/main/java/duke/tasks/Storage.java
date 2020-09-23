@@ -18,36 +18,35 @@ public class Storage {
         fullFilePath = f.getAbsolutePath();
     }
 
-    public ArrayList<Task> readFromFile() {
-        System.out.println("Loading previous list on your system from: ");
-        System.out.println(fullFilePath);
+    public ArrayList<Task> readFromFile(Ui ui) {
+        ui.printToUser("Loading previous list on your system from: " + System.lineSeparator() + fullFilePath);
 
         Scanner s = null; // create a Scanner using the File as the source
         try {
             s = new Scanner(f);
         } catch (FileNotFoundException e) {
-            System.out.println(Messages.MESSAGE_FILE_NOT_FOUND);
+            ui.printToUser(Messages.MESSAGE_FILE_NOT_FOUND);
             try {
                 f.getParentFile().mkdirs();
                 f.createNewFile();
                 return new ArrayList<>();
             } catch (IOException a) {
-                System.out.println(Messages.MESSAGE_IO_INITIALIZE_ERROR);
+                ui.printToUser(Messages.MESSAGE_IO_INITIALIZE_ERROR);
             }
         }
         while (s.hasNext()) {
-            lineDecipher(s.nextLine(), tasks);
+            lineDecipher(s.nextLine(), tasks, ui);
         }
         return tasks;
     }
 
 
-    private void lineDecipher(String lineData, ArrayList<Task> tasks) {
+    private void lineDecipher(String lineData, ArrayList<Task> tasks, Ui ui) {
         String[] parts = lineData.split("\\|");
         switch (parts[0].trim()) {
         case "T":
             if (parts.length < 3) {
-                System.out.println("Invalid Todo task!");
+                ui.printToUser("Invalid Todo task!");
                 break;
             }
             tasks.add(new Todo(parts[2].trim()));
@@ -58,7 +57,7 @@ public class Storage {
             break;
         case "D":
             if (parts.length < 4) {
-                System.out.println("Invalid Deadline task!");
+                ui.printToUser("Invalid Deadline task!");
                 break;
             }
             tasks.add(new Deadline(parts[2].trim(), parts[3].trim()));
@@ -69,7 +68,7 @@ public class Storage {
             break;
         case "E":
             if (parts.length < 4) {
-                System.out.println("Invalid Event task!");
+                ui.printToUser("Invalid Event task!");
                 break;
             }
             tasks.add(new Event(parts[2].trim(), parts[3].trim()));
@@ -79,19 +78,21 @@ public class Storage {
             taskCount++;
             break;
         default:
-            System.out.println("INVALID TASK DETECTED!");
+            ui.printToUser("INVALID TASK DETECTED!");
             break;
         }
     }
 
     public void overwriteList(ArrayList<Task> tasks) throws IOException {
         FileWriter fw = new FileWriter(fullFilePath);
+        taskCount = tasks.size();
         fw.write(listToString(tasks));
         fw.close();
     }
 
     public void appendList(String textToAppend) throws IOException {
         FileWriter fw = new FileWriter(fullFilePath, true); // create a FileWriter in append mode
+        taskCount = tasks.size();
         fw.write(textToAppend);
         fw.close();
     }
@@ -99,7 +100,7 @@ public class Storage {
     private String listToString(ArrayList<Task> tasks) {
         String listString = "";
         for (int i=0; i<taskCount; i++) {
-            listString = listString.concat(tasks.get(i).toString() + System.lineSeparator());
+            listString = listString.concat(tasks.get(i).exportTask() + System.lineSeparator());
         }
         return listString;
     }

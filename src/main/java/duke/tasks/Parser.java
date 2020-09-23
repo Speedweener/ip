@@ -2,26 +2,16 @@ package duke.tasks;
 
 import duke.exceptions.IncompleteCommandException;
 import duke.exceptions.UnknownCommandException;
+import duke.Commands.*;
 
 public class Parser {
 
-    private static String userInput;
-    private static String command;
-    private static String details;
-    private static String dateTime;
-    private static String filePath;
+    private static String details = "";
 
-    private static int charIndex;
-    private static int taskCount = 0;
-
-    private static boolean runDuke = true;
-
-    public static TaskHelper taskHelper = new TaskHelper("data/list.txt");
-
-
-    private static void inputDecider() throws IncompleteCommandException, UnknownCommandException {
+    public static Command parse(String userInput) throws IncompleteCommandException, UnknownCommandException {
         //Split command into 2 separate strings "command" and "details"
-        charIndex = userInput.indexOf(' ');
+        int charIndex = userInput.indexOf(' ');
+        String command;
         if (charIndex == -1) { // Catch for single word input eg "list" or incomplete command
             command = userInput;
             if (validCommand(command)) {
@@ -34,26 +24,21 @@ public class Parser {
 
         switch (command) {
         case "list":
-            taskHelper.list();
-            break;
+            return new ListCommand(details);
+        case "help":
+            return new HelpCommand(details);
         case "done":
-            taskHelper.done(details);
-            break;
+            return new DoneCommand(details);
         case "todo":
-            taskHelper.todo(details, "");
-            break;
+            return new TodoCommand(details);
         case "deadline":
-            taskHelper.deadline(details, dateTime);
-            break;
+            return new DeadlineCommand(details);
         case "event":
-            taskHelper.event(details, dateTime);
-            break;
+            return new EventCommand(details);
         case "delete":
-            taskHelper.delete(details);
-            break;
+            return new DeleteCommand(details);
         case "bye":
-            runDuke = false;
-            return;
+            return new ExitCommand(details);
         default:
             throw new UnknownCommandException(command);
         }

@@ -8,17 +8,17 @@ public class Todo extends Task {
     }
 
     @Override
-    public void printTask(){
-        System.out.println("[T]" + "[" + this.getStatusIcon() + "] " +this.description);
+    public String toString(){
+        return ("[T]" + "[" + this.getStatusIcon() + "] " +this.description);
     }
 
     @Override
     public String saveString(String details, String dateTime) {
-        return "T | 0 | " + details + System.lineSeparator();
+        return ("T | 0 | " + details + System.lineSeparator());
     }
 
     @Override
-    public String toString() {
+    public String exportTask() {
         return  "T | " + (isDone? 1:0) + " | " + description;
     }
 

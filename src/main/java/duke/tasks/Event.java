@@ -9,21 +9,20 @@ public class Event extends Task {
     }
 
     @Override
-    public void printTask(){
-        System.out.println("[E]" + "[" + this.getStatusIcon() + "] " + this.description
+    public String toString(){
+        return ("[E]" + "[" + this.getStatusIcon() + "] " + this.description
                 + String.format(" (at: %s)", at));
     }
 
     @Override
     public String saveString(String details, String dateTime) {
-        return  "E | 0 | " + details + " | " + dateTime
-                + System.lineSeparator();
+        return  ("E | 0 | " + details + " | " + dateTime
+                + System.lineSeparator());
     }
 
     @Override
-    public String toString() {
+    public String exportTask() {
         return  "E | " + (isDone? 1:0) + " | " + description + " | " + at;
     }
-
 
 }

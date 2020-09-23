@@ -1,3 +1,4 @@
-T | 0 | hello
-T | 0 | bywe
-E | 0 | kknre | nkwe
+T | 1 | ewl
+T | 1 | 2
+T | 0 | wej
+T | 0 | 2e

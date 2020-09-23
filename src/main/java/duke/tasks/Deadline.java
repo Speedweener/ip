@@ -10,19 +10,19 @@ public class Deadline extends Task {
     }
 
     @Override
-    public void printTask(){
-        System.out.println("[D]" + "[" + this.getStatusIcon() + "] " + this.description
+    public String toString(){
+      return ("[D]" + "[" + this.getStatusIcon() + "] " + this.description
         + String.format(" (by: %s)", by));
     }
 
     @Override
     public String saveString(String details, String dateTime) {
-        return "D | 0 | " + details + " | " + dateTime +
-                System.lineSeparator();
+        return ("D | 0 | " + details + " | " + dateTime +
+                System.lineSeparator());
     }
 
     @Override
-    public String toString() {
+    public String exportTask() {
         return "D | " + (isDone? 1:0) +" | " + description + " | " + by;
     }
 
