@@ -1,5 +1,7 @@
 package duke.tasks;
 
+import java.time.LocalDateTime;
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;
@@ -25,5 +27,5 @@ public abstract class Task {
     public abstract String toString();
     public abstract String saveString(String details, String dateTime);
     public abstract String exportTask();
-
+    public abstract LocalDateTime getDateTime();
 }

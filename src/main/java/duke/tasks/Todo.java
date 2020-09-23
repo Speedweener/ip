@@ -2,6 +2,8 @@ package duke.tasks;
 
 import duke.tasks.Task;
 
+import java.time.LocalDateTime;
+
 public class Todo extends Task {
     public Todo(String description) {
         super(description);
@@ -20,6 +22,11 @@ public class Todo extends Task {
     @Override
     public String exportTask() {
         return  "T | " + (isDone? 1:0) + " | " + description;
+    }
+
+    @Override
+    public LocalDateTime getDateTime() {
+        return null;
     }
 
 

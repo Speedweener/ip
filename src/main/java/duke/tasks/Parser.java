@@ -35,6 +35,12 @@ public class Parser {
             return new DeadlineCommand(details);
         case "event":
             return new EventCommand(details);
+        case "before":
+            return new BeforeCommand(details);
+        case "after":
+            return new AfterCommand(details);
+        case "today":
+            return new TodayCommand(details);
         case "delete":
             return new DeleteCommand(details);
         case "bye":

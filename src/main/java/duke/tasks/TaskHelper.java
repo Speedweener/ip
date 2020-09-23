@@ -1,17 +1,16 @@
 package duke.tasks;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+
 
 public class TaskHelper {
 
-    private static final String lineSpace = "____________________________________________________________";
     private static final String LS = System.lineSeparator();
 
-    private ArrayList<Task> tasks = new ArrayList<>();
+    private ArrayList<Task> tasks;
     private int charIndex;
     private int taskCount;
-    private String fullFilePath;
-    private String pathName;
 
 
     public TaskHelper (ArrayList<Task> tasks) {
@@ -84,12 +83,13 @@ public class TaskHelper {
     }
 
     public String deadline(String details, Storage storage) {
+        /** Splits details into details and dateTime */
         charIndex = details.indexOf("/by");
         String dateTime;
         if (charIndex == -1) { // Catch for invalid deadline command
             return ("INVALID. No \"/by\" in command"
                     + LS +"Format is: "
-                    + LS + "deadline {deadline name} /by {deadline time}");
+                    + LS + "deadline {deadline name} /by {deadline yyyyMMdd HHmm}");
         } else {
             dateTime = details.substring(charIndex + 3).trim();
             details = details.substring(0, charIndex).trim();
@@ -98,19 +98,25 @@ public class TaskHelper {
                 return("Blank name or time for deadline! Please Retry:");
             }
         }
-        tasks.add(new Deadline(details, dateTime));
-        taskCount++;
-        String confirmMessage = addText();
-        try {
-            storage.appendList(tasks.get(taskCount - 1).saveString(details, dateTime));
-        } catch (IOException e) {
-            confirmMessage = confirmMessage + LS + Messages.MESSAGE_IO_WRITE_ERROR  + e.getMessage();
-        }
-        return confirmMessage;
 
+        /** Verifies that dateTime is valid, else returns error message*/
+        if (DateTimeValidator.isValid(dateTime)) {
+            tasks.add(new Deadline(details, DateTimeValidator.stringToDateTime(dateTime)));
+            taskCount++;
+            String confirmMessage = addText();
+            try {
+                storage.appendList(tasks.get(taskCount - 1).saveString(details, dateTime));
+            } catch (IOException e) {
+                confirmMessage = confirmMessage + LS + Messages.MESSAGE_IO_WRITE_ERROR  + e.getMessage();
+            }
+            return confirmMessage;
+
+        }
+        return Messages.MESSAGE_INVALID_DATETIME;
     }
 
     public String event(String details, Storage storage) {
+        /** Splits details into details and dateTime */
         charIndex = details.indexOf("/at");
         String dateTime;
         if (charIndex == -1) { // Catch for invalid event command
@@ -124,15 +130,21 @@ public class TaskHelper {
                 return("Blank name or time for event! Please Retry:");
             }
         }
-        tasks.add(new Event(details, dateTime));
-        taskCount++;
-        String confirmMessage = addText();
-        try {
-            storage.appendList(tasks.get(taskCount - 1).saveString(details, dateTime));
-        } catch (IOException e) {
-            confirmMessage = confirmMessage + LS + Messages.MESSAGE_IO_WRITE_ERROR  + e.getMessage();
+
+        /** Verifies that dateTime is valid, else returns error message*/
+        if (DateTimeValidator.isValid(dateTime)) {
+            tasks.add(new Event(details, DateTimeValidator.stringToDateTime(dateTime)));
+            taskCount++;
+            String confirmMessage = addText();
+            try {
+                storage.appendList(tasks.get(taskCount - 1).saveString(details, dateTime));
+            } catch (IOException e) {
+                confirmMessage = confirmMessage + LS + Messages.MESSAGE_IO_WRITE_ERROR  + e.getMessage();
+            }
+            return confirmMessage;
+
         }
-        return  confirmMessage;
+        return Messages.MESSAGE_INVALID_DATETIME;
     }
 
     /** Returns text to be printed when adding a new task  */
@@ -155,5 +167,65 @@ public class TaskHelper {
         }
         return list;
     }
+
+    public String filterBefore(LocalDateTime dateTime) {
+        String list = "";
+        if (taskCount == 0) {
+            return ("Empty List");
+        }
+        for (int i = 0; i < taskCount; i++) {
+            if (tasks.get(i).getDateTime()!=null) { //Filters out Todo which returns a null value
+                if (tasks.get(i).getDateTime().isBefore(dateTime)) {
+                    list += (i + 1) + "." + tasks.get(i).toString() + System.lineSeparator();
+                }
+            }
+        }
+
+        if(list.isEmpty()) {
+            list = "No tasks come before the given date and time!";
+        }
+        return list;
+    }
+
+    public String filterAfter(LocalDateTime dateTime) {
+        String list = "";
+        if (taskCount == 0) {
+            return ("Empty List");
+        }
+        for (int i = 0; i < taskCount; i++) {
+
+            if (tasks.get(i).getDateTime()!=null) { //Filters out Todo which returns a null value
+                if (tasks.get(i).getDateTime().isAfter(dateTime)) {
+                    list += (i + 1) + "." + tasks.get(i).toString() + System.lineSeparator();
+                }
+            }
+        }
+
+        if(list.isEmpty()) {
+            list = "No tasks come after the given date and time!";
+        }
+        return list;
+    }
+
+    public String filterToday() {
+        String list = "";
+        if (taskCount == 0) {
+            return ("Empty List");
+        }
+        for (int i = 0; i < taskCount; i++) {
+
+            if (tasks.get(i).getDateTime()!=null) { //Filters out Todo which returns a null value
+                if (tasks.get(i).getDateTime().toLocalDate().isEqual(LocalDateTime.now().toLocalDate())) {
+                    list += (i + 1) + "." + tasks.get(i).toString() + System.lineSeparator();
+                }
+            }
+        }
+
+        if(list.isEmpty()) {
+            list = "No tasks come one the given date!";
+        }
+        return list;
+    }
+
 
 }

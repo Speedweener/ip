@@ -14,6 +14,8 @@ public class Messages {
     public static final String MESSAGE_WELCOME = "Hello from\n" + logo;
     public static final String MESSAGE_GOODBYE = "Bye. Hope to see you again soon!";
 
+    public static final String MESSAGE_INVALID_DATETIME = "Date or time input is incorrect!" +LS
+                                                         + "Please use format \"yyyyMMdd HHmm\"";
 
     //EXCEPTION MESSAGES
     public static final String MESSAGE_IO_INITIALIZE_ERROR = border + "Unable to create list on your system!" + LS
