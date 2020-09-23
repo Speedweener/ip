@@ -32,4 +32,9 @@ public class Event extends Task {
         return at;
     }
 
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
 }

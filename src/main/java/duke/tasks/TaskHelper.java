@@ -228,4 +228,23 @@ public class TaskHelper {
     }
 
 
+    public String filterKeyword(String keyword) {
+        String list = "";
+        if (taskCount == 0) {
+            return ("Empty List");
+        }
+        for (int i = 0; i < taskCount; i++) {
+            if (tasks.get(i).getDescription().contains(keyword)) {
+                list += (i + 1) + "." + tasks.get(i).toString() + System.lineSeparator();
+            }
+        }
+        if(list.isEmpty()) {
+            list = "No tasks contain the specified keyword!";
+        }
+        return list;
+    }
+
+
+
+
 }

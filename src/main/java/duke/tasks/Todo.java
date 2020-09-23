@@ -29,5 +29,10 @@ public class Todo extends Task {
         return null;
     }
 
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
 
 }

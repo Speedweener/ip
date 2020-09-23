@@ -28,4 +28,7 @@ public abstract class Task {
     public abstract String saveString(String details, String dateTime);
     public abstract String exportTask();
     public abstract LocalDateTime getDateTime();
+    public abstract String getDescription();
+
+
 }
