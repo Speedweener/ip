@@ -1,27 +1,26 @@
-
 # Duke User Guide
 
 Duke is a **Command Line Interface** (CLI) app which allows you to store different tasks. 
-Designed for *fast* users, Duke allows you to quickly **store**, **query**, and **mark** 
+Designed for *fast* users, Duke allows you to quickly **store**, **find**, and **mark** 
 your tasks.
 
 
 * [Quick Start](#Quick-Start)  
 * [Features](#Features)
-	* [Print help information:](print-help-information) **help**
-    * [List out all existing task](list-out-all-existing-task) :   **list**
-    * [Add a new ToDo task](add-a-new-todo-task) **todo**
-    * [Add a new Deadline task:](add-a-new-deadline-task) **deadline**
-    * [Add a new Event task:](add-a-new-event-task) **event**
-    * [Mark a task as done:](mark-a-task-as-done) **done**
-    * [Delete a task :](delete-a-task) **delete**
-    * [Find tasks using keyword:](find-tasks-using-keyword) **find**
-    * [List all tasks before a certain date:](list-all-tasks-before-a-certain-date) **before**
-    * [List all tasks after a certain date:](list-all-tasks-after-a-certain-date) **after**
-    * [List all tasks occuring today:](list-all-tasks-occurring-today) **today**
-    * [Exit the Duke program:](exit-the-duke-program) **bye**
-    * [Saving the data:](saving-the-data) 
-    * [Loading the data:](loading-the-data) 
+	* [Print help information:](#print-help-information) **help**
+    * [List out all existing task](#list-out-all-existing-task) :   **list**
+    * [Add a new ToDo task](#add-a-new-todo-task) **todo**
+    * [Add a new Deadline task:](#add-a-new-deadline-task) **deadline**
+    * [Add a new Event task:](#add-a-new-event-task) **event**
+    * [Mark a task as done:](#mark-a-task-as-done) **done**
+    * [Delete a task :](#delete-a-task) **delete**
+    * [Find tasks using keyword:](#find-tasks-using-keyword) **find**
+    * [List all tasks before a certain date:](#list-all-tasks-before-a-certain-date) **before**
+    * [List all tasks after a certain date:](#list-all-tasks-after-a-certain-date) **after**
+    * [List all tasks occuring today:](#list-all-tasks-occurring-today) **today**
+    * [Exit the Duke program:](#exit-the-duke-program) **bye**
+    * [Saving the data:](#saving-the-data) 
+    * [Loading the data:](#loading-the-data) 
 * [FAQ](#FAQ])
 * [Command Summary](#Command-Summary])
 
