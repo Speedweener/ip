@@ -1,3 +1,4 @@
+
 # Duke User Guide
 
 Duke is a **Command Line Interface** (CLI) app which allows you to store different tasks. 
@@ -33,7 +34,7 @@ your tasks.
 holding the <kbd>Shift</kbd> key, right click the file and select "Copy as path". <br/><br/> 
 5. Start Command Prompt by pressing <kbd>Windows</kbd> + <kbd>R</kbd> ,  keying in "cmd"
 then pressing <kbd>Enter</kbd>. <br/><br/> 
-6. In the Command Prompt, type in "java -jar", then paste in the copied absolute path. It should look something like the picture below: <br/><br/> 
+6. In the Command Prompt, type in "java -jar", then paste in the copied absolute path. It should look something like the picture below:  ![](https://raw.githubusercontent.com/Speedweener/ip/master/docs/images/javacommand.PNG)<br/><br/> 
 7. Press <kbd>Enter</kbd>. You should see this Duke logo.  <br/><br/> 
 ```bat
  ## ______       _
