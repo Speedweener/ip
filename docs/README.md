@@ -67,11 +67,13 @@ Notes on command format:
 Prints out all the commands available in the app.
 
     Format: help 
+    
 <br/><br/> 
 ### List out all existing task: `list` 
 List out all task currently existing in the list. Tasks are indexed according to the order in which the tasks were added to the list.
 
     Format: list
+    
 <br/><br/> 
 ### Add a new ToDo task: `todo`
 Adds a new *ToDo* task to the list with a task description.
@@ -80,12 +82,14 @@ Adds a new *ToDo* task to the list with a task description.
 Example:
 * `todo assignment`
 * `todo project research`
+
 <br/><br/> 
 ### Add a new Deadline task: `deadline`
 Adds a new *Deadline* task to the list with a task description and a date and time.
 Date and time entered must follow format accordingly.
 
     Format: deadline <description> /by <yyyyMMdd HHmm>
+    
 Example:
 * `deadline assignment /by 20200609 1800`
 * `deadline project research /by 20191231 2359 `
