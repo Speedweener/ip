@@ -1,3 +1,4 @@
+
 # Duke User Guide
 
 Duke is a **Command Line Interface** (CLI) app which allows you to store different tasks. 
@@ -5,24 +6,24 @@ Designed for *fast* users, Duke allows you to quickly **store**, **find**, and *
 your tasks.
 
 
-* [Quick Start](#Quick-Start)  
-* [Features](#Features)
-	* [Print help information:](#print-help-information) **help**
-    * [List out all existing task](#list-out-all-existing-task) :   **list**
-    * [Add a new ToDo task](#add-a-new-todo-task) **todo**
-    * [Add a new Deadline task:](#add-a-new-deadline-task) **deadline**
-    * [Add a new Event task:](#add-a-new-event-task) **event**
-    * [Mark a task as done:](#mark-a-task-as-done) **done**
-    * [Delete a task :](#delete-a-task) **delete**
-    * [Find tasks using keyword:](#find-tasks-using-keyword) **find**
-    * [List all tasks before a certain date:](#list-all-tasks-before-a-certain-date) **before**
-    * [List all tasks after a certain date:](#list-all-tasks-after-a-certain-date) **after**
-    * [List all tasks occuring today:](#list-all-tasks-occurring-today) **today**
-    * [Exit the Duke program:](#exit-the-duke-program) **bye**
+* [Quick Start](#quick-start)  
+* [Features](#features)
+	* [Print help information:](#print-help-information-help) **help**
+    * [List out all existing task:](#list-out-all-existing-task-list) **list**
+    * [Add a new ToDo task](#add-a-new-todo-task-todo) **todo**
+    * [Add a new Deadline task:](#add-a-new-deadline-task-deadline) **deadline**
+    * [Add a new Event task:](#add-a-new-event-task-event) **event**
+    * [Mark a task as done:](#mark-a-task-as-done-done) **done**
+    * [Delete a task:](#delete-a-task-delete) **delete**
+    * [Find tasks using keyword:](#find-tasks-using-keyword-find) **find**
+    * [List all tasks before a certain date:](#list-all-tasks-before-a-certain-date-before) **before**
+    * [List all tasks after a certain date:](#list-all-tasks-after-a-certain-date-after) **after**
+    * [List all tasks occuring today:](#list-all-tasks-occurring-today-today) **today**
+    * [Exit the Duke program:](#exit-the-duke-program-bye) **bye**
     * [Saving the data:](#saving-the-data) 
     * [Loading the data:](#loading-the-data) 
-* [FAQ](#FAQ])
-* [Command Summary](#Command-Summary])
+* [FAQ](#faq)
+* [Command Summary](#command-summary)
 
 
 ## Quick Start
@@ -33,8 +34,8 @@ your tasks.
 holding the <kbd>Shift</kbd> key, right click the file and select "Copy as path". <br/><br/> 
 5. Start Command Prompt by pressing <kbd>Windows</kbd> + <kbd>R</kbd> ,  keying in "cmd"
 then pressing <kbd>Enter</kbd>. <br/><br/> 
-6. In the Command Prompt, type in "java -jar", then paste in the copied absolute path. It should look something like the picture below: <br/><br/> 
-7. Press <kbd>Enter</kbd>. You should see this Duke logo.  
+6. In the Command Prompt, type in "java -jar", then paste in the copied absolute path. It should look something like the picture below:  ![](https://raw.githubusercontent.com/Speedweener/ip/master/docs/images/javacommand.PNG)<br/><br/> 
+7. Press <kbd>Enter</kbd>. You should see this Duke logo.  <br/><br/> 
 ```bat
  ## ______       _
  ## |  _  \     | |
@@ -43,10 +44,11 @@ then pressing <kbd>Enter</kbd>. <br/><br/>
  ## | |/ /| |_| |   <  __/
  ## |___/  \__,_|_|\_\___|
 ```
-
 8. The app is now ready to go! Go ahead and test it out with a **help** command. The app should print out a list of different
  commands. <br/><br/> 
-10. Refer to the section below for the different features of the Duke app.
+9. Refer to the section below for the different features of the Duke app.
+
+
 ## Features
 Notes on command format:
 
@@ -59,27 +61,27 @@ Notes on command format:
 >*Event*
 
     
+<br/><br/> 
 
 ### Print help information: `help`
 Prints out all the commands available in the app.
 
-    Format: help
-
-### List out all existing task :   `list`
+    Format: help 
+<br/><br/> 
+### List out all existing task: `list` 
 List out all task currently existing in the list. Tasks are indexed according to the order in which the tasks were added to the list.
 
     Format: list
-
-
-### Add a new ToDo task `todo`
+<br/><br/> 
+### Add a new ToDo task: `todo`
 Adds a new *ToDo* task to the list with a task description.
 
     Format: todo <description>
 Example:
 * `todo assignment`
 * `todo project research`
-
-### Add a new Deadline task:  `deadline`
+<br/><br/> 
+### Add a new Deadline task: `deadline`
 Adds a new *Deadline* task to the list with a task description and a date and time.
 Date and time entered must follow format accordingly.
 
@@ -87,8 +89,8 @@ Date and time entered must follow format accordingly.
 Example:
 * `deadline assignment /by 20200609 1800`
 * `deadline project research /by 20191231 2359 `
-
-### Add a new Event task:  `event`
+<br/><br/> 
+### Add a new Event task: `event`
 Adds a new *Event* task to the list with a task description and a date and time.
 Date and time entered must follow format accordingly.
 
@@ -96,24 +98,24 @@ Date and time entered must follow format accordingly.
 Example:
 * `event birthday party /at 20200609 1700`
 * `event End-of-year celebration /at 20191231 2359 `
-
-### Mark a task as done:  `done`
+<br/><br/> 
+### Mark a task as done: `done`
 Marks a task with the specified index as done.  The index will correspond to the index of that task in the list. You can do a `list` command to check the task indexes.
 
     Format: done <index>
 Example:
 * `done 3`
 * `done 1 `
-
-### Delete a task:  `delete`
+<br/><br/> 
+### Delete a task: `delete`
 Deletes a task with the specified index.  The index will correspond to the index of that task in the list. You can do a `list` command to check the task indexes.
 
     Format: delete <index>
 Example:
 * `delete 5`
 * `delete 2 `
-
-### Find tasks using keyword:  `find`
+<br/><br/> 
+### Find tasks using keyword: `find`
 Searches the task list and lists out the tasks which have descriptions
 containing the keyword.
 
@@ -121,8 +123,8 @@ containing the keyword.
 Example:
 * `find party`
 * `find -of-`
-
-### List all tasks before a certain date:  `before`
+<br/><br/> 
+### List all tasks before a certain date: `before`
 Filters the task list and lists out tasks which happen before the given date and time.
 Date and time entered must follow format accordingly.
 
@@ -130,8 +132,8 @@ Date and time entered must follow format accordingly.
 Example:
 * `before 20200105 2359`
 * `before 20191115 1200`
-
-### List all tasks after a certain date:  `after`
+<br/><br/> 
+### List all tasks after a certain date: `after`
 Filters the task list and lists out tasks which happen after the given date and time.
 Date and time entered must follow format accordingly.
 
@@ -139,35 +141,31 @@ Date and time entered must follow format accordingly.
 Example:
 * `after 20181205 2159`
 * `after 19801112 1100`
-
-### List all tasks occurring today:  `today`
+<br/><br/> 
+### List all tasks occurring today: `today`
 Filters the task list and lists out tasks which happen on the current day.
 
     Format: today
-
-### Exit the Duke program:  `bye`
+<br/><br/> 
+### Exit the Duke program: `bye`
 Exits the program.
 
     Format: bye
-    
+<br/><br/>     
 ### Saving the data:
 Saving of the task list data is done automatically into your hard disk. The list will be saved as **list .txt**  in the **data** folder located in your home folder.
-
+<br/><br/> 
 ### Loading the data:
 Loading of the task list data is also done automatically. The **list .txt** file in the **data** folder will be read and loaded when you first start the app. If the **list .txt** does not exist when you start the app, a new empty **list .txt** file will be created.
 
-
-
-
 ## FAQ
-1. **Q**: "How do I transfer my data to another Computer?"
+1. **Q**: "How do I transfer my data to another Computer?"<br/>
 **A** : Copy the **data** folder and paste it to the home folder of the new Computer containing the **duke.jar** file.
 
-1. **Q**: "What happens to my data if I close the app halfway?"
+1. **Q**: "What happens to my data if I close the app halfway?"<br/>
 **A** : The data in your task list is saved each time you edit the task list. Hence, your task list will retain your most updated changes to your task list.
 
 ## Command Summary
-
 **Action** | **Format, Examples**
 ------------ | -------------
 **help**|`help`
