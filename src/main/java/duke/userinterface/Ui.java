@@ -52,18 +52,18 @@ public class Ui {
 
     /** TPrints all the available commands for Duke*/
     public void printHelp() {
-        printToUser("Available commands are:"
-                +"01) list"
-                +"02) todo"
-                +"03) deadline"
-                +"04) event"
-                +"05) done"
-                +"06) delete"
-                +"07) find"
-                +"08) before"
-                +"09) after"
-                +"10) today"
-                +"11) bye");
+        printToUser("Available commands are:" + LS
+                +" 01) list" + LS
+                +" 02) todo" + LS
+                +" 03) deadline" + LS
+                +" 04) event" + LS
+                +" 05) done" + LS
+                +" 06) delete" + LS
+                +" 07) find" + LS
+                +" 08) before" + LS
+                +" 09) after" + LS
+                +" 10) today" + LS
+                +" 11) bye");
     }
 
 
