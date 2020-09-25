@@ -1,5 +1,6 @@
-package duke.tasks;
+package duke.userinterface;
 
+import duke.Common.Messages;
 import duke.exceptions.EmptyCommandException;
 
 import java.io.InputStream;
@@ -13,14 +14,13 @@ public class Ui {
     private static final String PREFIX = " ## ";
 
     private final Scanner in;
-    private final PrintStream out;
 
     public Ui() {
         this(System.in, System.out);
     }
+
     public Ui(InputStream in, PrintStream out) {
         this.in = new Scanner(in);
-        this.out = out;
     }
 
 
@@ -77,18 +77,5 @@ public class Ui {
         System.out.println(PREFIX + message.replace("\n", LS + PREFIX));
     }
 
-
-
-
-//    public  void printHelp() {
-//        printToUser("Available commands are:");
-//        System.out.println("1) list");
-//        System.out.println("2) todo");
-//        System.out.println("3) deadline");
-//        System.out.println("4) event");
-//        System.out.println("5) done");
-//        System.out.println("7) delete");
-//        System.out.println("8) bye");
-//    }
 
 }

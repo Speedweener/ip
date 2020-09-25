@@ -2,7 +2,7 @@ package duke.Commands;
 
 import duke.tasks.Storage;
 import duke.tasks.TaskHelper;
-import duke.tasks.Ui;
+import duke.userinterface.Ui;
 
 public class DeadlineCommand extends Command{
     public DeadlineCommand(String description) {

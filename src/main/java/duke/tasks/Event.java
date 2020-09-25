@@ -1,5 +1,7 @@
 package duke.tasks;
 
+import duke.Common.DateTimeValidator;
+
 import java.time.LocalDateTime;
 
 public class Event extends Task {

@@ -1,4 +1,4 @@
-package duke.tasks;
+package duke.Common;
 
 public class Messages {
     private static final String LS = System.lineSeparator();

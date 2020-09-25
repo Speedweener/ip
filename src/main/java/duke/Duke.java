@@ -5,21 +5,12 @@ import duke.Commands.ExitCommand;
 import duke.exceptions.EmptyCommandException;
 import duke.exceptions.IncompleteCommandException;
 import duke.exceptions.UnknownCommandException;
-import duke.tasks.*;
+import duke.userinterface.Ui;
+import duke.tasks.Storage;
+import duke.tasks.TaskHelper;
+import duke.userinterface.Parser;
 
 public class Duke {
-    private static final String lineSpace = "____________________________________________________________";
-
-    private static String userInput;
-    private static String command;
-    private static String details;
-    private static String dateTime;
-
-    private static int charIndex;
-    private static int taskCount = 0;
-
-    private static boolean runDuke = true;
-
     private TaskHelper taskHelper;
     private Ui ui;
     private Storage storage;
@@ -49,6 +40,7 @@ public class Duke {
     }
 
     public static void main(String[] args) {
+
         new Duke("data/list.txt").run();
     }
 

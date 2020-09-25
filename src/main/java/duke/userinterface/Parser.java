@@ -1,4 +1,4 @@
-package duke.tasks;
+package duke.userinterface;
 
 import duke.exceptions.IncompleteCommandException;
 import duke.exceptions.UnknownCommandException;
@@ -54,7 +54,8 @@ public class Parser {
 
     private static boolean validCommand(String command) {
         return command.equals("todo") || command.equals("deadline") || command.equals("event")
-        || command.equals("find");
+                || command.equals("find") || command.equals("before") || command.equals("after")
+                || command.equals("delete") || command.equals("done")  ;
     }
 
 }
