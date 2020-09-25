@@ -15,13 +15,7 @@ public class Event extends Task {
     @Override
     public String toString(){
         return ("[E]" + "[" + this.getStatusIcon() + "] " + this.description
-                + String.format(" (at: %s)", DateTimeValidator.dateTimeToString(at)));
-    }
-
-    @Override
-    public String saveString(String details, String dateTime) {
-        return  ("E | 0 | " + details + " | " + dateTime
-                + System.lineSeparator());
+                + String.format(" (at: %s)", DateTimeValidator.dateTimeToPrint(at)));
     }
 
     @Override

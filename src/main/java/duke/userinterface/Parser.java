@@ -1,13 +1,22 @@
 package duke.userinterface;
 
+import duke.exceptions.EmptyCommandException;
 import duke.exceptions.IncompleteCommandException;
 import duke.exceptions.UnknownCommandException;
 import duke.Commands.*;
 
 public class Parser {
 
+    /** Empty string variable to store detais of the users commands*/
     private static String details = "";
 
+
+    /**
+     * Deciphers the input string and initializes and returns the corresponding
+     * Command with the details .
+     * @throws IncompleteCommandException If command is valid and details are incomplete
+     * @throws UnknownCommandException If command is invalid
+     */
     public static Command parse(String userInput) throws IncompleteCommandException, UnknownCommandException {
         //Split command into 2 separate strings "command" and "details"
         int charIndex = userInput.indexOf(' ');
@@ -52,6 +61,12 @@ public class Parser {
         }
     }
 
+
+    /**
+     * Returns true if command is a valid command
+     * Compares input String with each valid non single word command.
+     * Returns false otherwise
+     */
     private static boolean validCommand(String command) {
         return command.equals("todo") || command.equals("deadline") || command.equals("event")
                 || command.equals("find") || command.equals("before") || command.equals("after")

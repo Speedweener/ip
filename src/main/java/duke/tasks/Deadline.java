@@ -15,13 +15,7 @@ public class Deadline extends Task {
     @Override
     public String toString(){
       return ("[D]" + "[" + this.getStatusIcon() + "] " + this.description
-        + String.format(" (by: %s)", DateTimeValidator.dateTimeToString(by)));
-    }
-
-    @Override
-    public String saveString(String details, String dateTime) {
-        return ("D | 0 | " + details + " | " + dateTime +
-                System.lineSeparator());
+        + String.format(" (by: %s)", DateTimeValidator.dateTimeToPrint(by)));
     }
 
     @Override

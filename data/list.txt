@@ -1,5 +1,8 @@
-D | 1 | this | 20190909 2020
 E | 1 | w | 20190909 0900
-T | 0 | what is this
-E | 0 | ask | 20191020 0000
-T | 0 | wken
+T | 1 | what is this
+E | 1 | ask | 20191020 0000
+T | 1 | wken
+T | 1 | knsd
+D | 0 | jbsd | 20190211 1900
+E | 0 | sjnbd | 20201211 1211
+T | 0 | ew

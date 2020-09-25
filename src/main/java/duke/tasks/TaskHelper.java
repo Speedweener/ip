@@ -11,21 +11,35 @@ public class TaskHelper {
 
     private static final String LS = System.lineSeparator();
 
+    /** List of different tasks */
     private ArrayList<Task> tasks;
-    private int charIndex;
+
+    /** Number of tasks in the list*/
     private int taskCount;
 
+    /** Index used to split up the details and dateTime*/
+    private int charIndex;
 
     public TaskHelper (ArrayList<Task> tasks) {
         this.tasks = tasks;
         taskCount = tasks.size();
     }
 
+    /**
+     * Checks if input details is valid then deletes the task and returns the confirmation message
+     * Else returns the error messages
+     * valid = (Positive integer value not higher than taskCount)
+     */
     public String delete(String details, Storage storage) {
         if (taskCount == 0) {
             return "List is empty!";
         }
-        int taskNumber = Integer.parseInt(details);
+        int taskNumber;
+        try {
+            taskNumber = Integer.parseInt(details);
+        } catch (NumberFormatException e) {
+            return ("Invalid 'delete' command!" + LS + Messages.MESSAGE_NUMBER_FORMAT_EXCEPTION);
+        }
 
         if (taskNumber <= taskCount && !(taskNumber < 0)) {
             String confirmMessage = "Noted. I've removed this task:" + LS
@@ -45,11 +59,22 @@ public class TaskHelper {
         }
     }
 
+    /**
+     * Checks if input details is valid then marks the task as done and returns the confirmation message
+     * Else returns the error message
+     * valid = (Positive integer value not higher than taskCount and not marked before)
+     */
     public String done(String details, Storage storage) {
         if (taskCount == 0) {
             return ("List is empty!");
         }
-        int taskNumber = Integer.parseInt(details);
+
+        int taskNumber;
+        try {
+             taskNumber = Integer.parseInt(details);
+        } catch (NumberFormatException e) {
+            return ("Invalid 'done' command!" + LS + Messages.MESSAGE_NUMBER_FORMAT_EXCEPTION);
+        }
 
         if (taskNumber <= taskCount && !(taskNumber < 0)) {
             if (tasks.get(taskNumber - 1).markAsDone()) { // Returns true if task has not been marked before
@@ -63,7 +88,7 @@ public class TaskHelper {
 
                 return confirmMessage;
             } else {
-                return ("Task has been marked as done already!");
+                return ("Task has already been marked as done!");
             }
         } else {
             return "Invalid \"done\" command!"
@@ -72,19 +97,20 @@ public class TaskHelper {
     }
 
 
-
+    /** Adds new Todo task and returns the confirmation message */
     public String todo(String details, Storage storage) {
         tasks.add(new Todo(details));
         taskCount++;
         String confirmMessage = addText();
         try {
-            storage.appendList(tasks.get(taskCount - 1).saveString(details, ""));
+            storage.appendList(tasks.get(taskCount - 1).exportTask());
         } catch (IOException e) {
             confirmMessage = confirmMessage + Messages.MESSAGE_IO_WRITE_ERROR + e.getMessage();
         }
         return confirmMessage;
     }
 
+    /** Adds new Deadline task and returns the confirmation message */
     public String deadline(String details, Storage storage) {
         /** Splits details into details and dateTime */
         charIndex = details.indexOf("/by");
@@ -108,7 +134,7 @@ public class TaskHelper {
             taskCount++;
             String confirmMessage = addText();
             try {
-                storage.appendList(tasks.get(taskCount - 1).saveString(details, dateTime));
+                storage.appendList(tasks.get(taskCount - 1).exportTask());
             } catch (IOException e) {
                 confirmMessage = confirmMessage + LS + Messages.MESSAGE_IO_WRITE_ERROR  + e.getMessage();
             }
@@ -118,6 +144,7 @@ public class TaskHelper {
         return Messages.MESSAGE_INVALID_DATETIME;
     }
 
+    /** Adds new Event task and returns the confirmation message */
     public String event(String details, Storage storage) {
         /** Splits details into details and dateTime */
         charIndex = details.indexOf("/at");
@@ -140,7 +167,7 @@ public class TaskHelper {
             taskCount++;
             String confirmMessage = addText();
             try {
-                storage.appendList(tasks.get(taskCount - 1).saveString(details, dateTime));
+                storage.appendList(tasks.get(taskCount - 1).exportTask());
             } catch (IOException e) {
                 confirmMessage = confirmMessage + LS + Messages.MESSAGE_IO_WRITE_ERROR  + e.getMessage();
             }
@@ -159,7 +186,7 @@ public class TaskHelper {
     }
 
 
-    /** Returns the list as a string */
+    /** Returns the entire list */
     public String list() {
         String list = "";
         if (taskCount == 0) {
@@ -171,6 +198,8 @@ public class TaskHelper {
         return list;
     }
 
+
+    /** Returns the task in the list before the input date */
     public String filterBefore(LocalDateTime dateTime) {
         String list = "";
         if (taskCount == 0) {
@@ -190,6 +219,7 @@ public class TaskHelper {
         return list;
     }
 
+    /** Returns the task in the list after the input date */
     public String filterAfter(LocalDateTime dateTime) {
         String list = "";
         if (taskCount == 0) {
@@ -210,6 +240,7 @@ public class TaskHelper {
         return list;
     }
 
+    /** Returns the task in the list happening on the current date */
     public String filterToday() {
         String list = "";
         if (taskCount == 0) {
@@ -230,7 +261,7 @@ public class TaskHelper {
         return list;
     }
 
-
+    /** Returns the task in the list which contain the keyword in the task description */
     public String filterKeyword(String keyword) {
         String list = "";
         if (taskCount == 0) {

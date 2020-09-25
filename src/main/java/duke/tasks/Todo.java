@@ -15,11 +15,6 @@ public class Todo extends Task {
     }
 
     @Override
-    public String saveString(String details, String dateTime) {
-        return ("T | 0 | " + details + System.lineSeparator());
-    }
-
-    @Override
     public String exportTask() {
         return  "T | " + (isDone? 1:0) + " | " + description;
     }

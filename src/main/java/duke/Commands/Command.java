@@ -16,6 +16,11 @@ public abstract class Command {
     }
 
 
+
+    /**
+     * This method performs different actions according to the type of command
+     * Inputs are for the method to interact with a certain TaskHelper, Ui and Storage object
+     */
     public abstract void execute(TaskHelper taskHelper, Ui ui, Storage storage);
 
 }

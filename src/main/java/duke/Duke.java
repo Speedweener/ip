@@ -15,7 +15,11 @@ public class Duke {
     private Ui ui;
     private Storage storage;
 
-
+    /**
+     * Initializes a new Ui, Storage and TaskHelper object
+     * Storage object is initialized with input String as the file path
+     * Performs a "list" method to display tasks already in the txt file from the file path
+     */
     public Duke(String filePath) {
         ui = new Ui();
         ui.printWelcome();
@@ -24,6 +28,11 @@ public class Duke {
         ui.printList(taskHelper.list());
     }
 
+    /**
+     * Takes in user input, deciphers and executes the command
+     * Method continues until exit condition isExit is true
+     * isExit is true when user inputs the exit Command
+     */
     public void run() {
         boolean isExit = false;
         while (!isExit) {
@@ -40,7 +49,6 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-
         new Duke("data/list.txt").run();
     }
 

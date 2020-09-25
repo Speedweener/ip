@@ -12,16 +12,42 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Storage {
-    private int taskCount = 0;
+
+    /** Variables for reading and writing to txt file*/
     private File f;
-    private ArrayList<Task> tasks = new ArrayList<>();
     private String fullFilePath;
+
+    /** Variables to create tasks from txt file*/
+    private ArrayList<Task> tasks = new ArrayList<>();
+    private int taskCount = 0;
+
+
+
+    /** Costants to identify the different tasks in the txt file */
+    private final String TODO = "T";
+    private final int TODO_LENGTH = 3;
+
+    private final String DEADLINE = "D";
+    private final int DEADLINE_LENGTH = 4;
+
+    private final String EVENT = "E";
+    private final int EVENT_LENGTH = 4;
+
+
 
     public Storage(String filePath) {
         f = new File(filePath);
         fullFilePath = f.getAbsolutePath();
     }
 
+
+    /**
+     * Reads from txt file and returns an ArrayList<Task> accordingly
+     * Txt file is specified from the filePath input during initialization
+     * If the txt file does not exist, method will attempt to create a new txt file.
+     * Alerts user if unable to create the txt file
+     * Uses Ui class to print error messages
+     */
     public ArrayList<Task> readFromFile(Ui ui) {
         ui.printToUser("Loading previous list on your system from: " + System.lineSeparator() + fullFilePath);
 
@@ -45,45 +71,52 @@ public class Storage {
     }
 
 
+    /**
+     * Deciphers the lines from the txt file and adds the task to the list.
+     * Checks for invalid tasks (No. of parts < Task length)
+     * Checks for invalid entries (Not a ToDo, Deadline or Event)
+     * Uses DateTimeValidator class to make sure details are a valid date
+     * Uses Ui class to print error messages
+     */
     private void lineDecipher(String lineData, ArrayList<Task> tasks, Ui ui) {
         String[] parts = lineData.split("\\|");
         switch (parts[0].trim()) {
-        case "T":
-            if (parts.length < 3) {
+        case TODO:
+            if (parts.length < TODO_LENGTH) {
                 ui.printToUser("Invalid Todo task!");
                 break;
             }
-            tasks.add(new Todo(parts[2].trim()));
+            tasks.add(new Todo(parts[TODO_LENGTH-1].trim()));
             if (parts[1].trim().equals("1")) {
                 tasks.get(taskCount).markAsDone();
             }
             taskCount++;
             break;
-        case "D":
-            if (parts.length < 4) {
+        case DEADLINE:
+            if (parts.length < DEADLINE_LENGTH) {
                 ui.printToUser("Invalid Deadline task!");
                 break;
             }
-            if (!DateTimeValidator.isValid(parts[3].trim())) {
+            if (!DateTimeValidator.isValid(parts[DEADLINE_LENGTH-1].trim())) {
                 ui.printToUser("Invalid date/time for Deadline task!");
                 break;
             }
-            tasks.add(new Deadline(parts[2].trim(), DateTimeValidator.stringToDateTime(parts[3].trim())));
+            tasks.add(new Deadline(parts[DEADLINE_LENGTH-2].trim(), DateTimeValidator.stringToDateTime(parts[3].trim())));
             if (parts[1].trim().equals("1")) {
                 tasks.get(taskCount).markAsDone();
             }
             taskCount++;
             break;
-        case "E":
-            if (parts.length < 4) {
+        case EVENT:
+            if (parts.length < EVENT_LENGTH) {
                 ui.printToUser("Invalid Event task!");
                 break;
             }
-            if (!DateTimeValidator.isValid(parts[3].trim())) {
+            if (!DateTimeValidator.isValid(parts[EVENT_LENGTH-1].trim())) {
                 ui.printToUser("Invalid date/time for Event task!");
                 break;
             }
-            tasks.add(new Event(parts[2].trim(), DateTimeValidator.stringToDateTime(parts[3].trim())));
+            tasks.add(new Event(parts[EVENT_LENGTH-2].trim(), DateTimeValidator.stringToDateTime(parts[3].trim())));
             if (parts[1].trim().equals("1")) {
                 tasks.get(taskCount).markAsDone();
             }

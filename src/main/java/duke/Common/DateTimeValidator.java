@@ -5,9 +5,14 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 public class DateTimeValidator {
 
+
+    /** Chosen format for date and time. Date and time input must follow this format */
     private static DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyyMMdd HHmm");
 
-    /** Returns the correct character index between date and time if valid, else -1 */
+    /**
+     * Returns true if input string follows the format "yyyyMMdd HHmm"
+     * Else returns false
+     */
     public static boolean isValid(String dateTime) {
         try {
             LocalDateTime.parse(dateTime, f);
@@ -17,16 +22,22 @@ public class DateTimeValidator {
         return true;
     }
 
+    /** Returns LocalDateTime converted from input String according to the chosen format*/
     public static LocalDateTime stringToDateTime(String dateTime) {
         return LocalDateTime.parse(dateTime, f);
     }
 
+    /** Returns String converted from LocalDateTime according to the chosen format*/
     public static String dateTimeExport(LocalDateTime dateTime) {
         return (dateTime.format(f));
     }
 
 
-    public static String dateTimeToString (LocalDateTime dateTime) {
+    /**
+     * Returns String in a more readable format to be printed for the user
+     * Format of returned String is <day><prefix> of <month> <year> <hour>:<minute><am/pm>
+     */
+    public static String dateTimeToPrint(LocalDateTime dateTime) {
         String prefix;
         switch (dateTime.getDayOfMonth()) {
         case 1:

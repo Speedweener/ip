@@ -8,9 +8,10 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 public class Ui {
+
+    /** Constants used for formatting purposes*/
     private static final String LS  = System.lineSeparator();
     private static final String border = "____________________________________________________________";
-
     private static final String PREFIX = " ## ";
 
     private final Scanner in;
@@ -24,15 +25,20 @@ public class Ui {
     }
 
 
+    /** These methods print starting and end messages*/
     public void printWelcome() {
         printToUser(Messages.MESSAGE_WELCOME);
     }
-
     public void printGoodbye() {
         printToUser(Messages.MESSAGE_GOODBYE);
     }
 
 
+    /**
+     * Reads for user input.
+     * Prints PREFIX and "Awaiting input: " to signal to user to enter an input
+     * @throws EmptyCommandException If user input is blank or only space characters
+     */
     public String readCommand() throws EmptyCommandException {
         System.out.print(PREFIX + "Awaiting input: ");
         String userInput = in.nextLine().trim();
@@ -43,21 +49,30 @@ public class Ui {
         return userInput;
     }
 
+
+    /** TPrints all the available commands for Duke*/
     public void printHelp() {
         printToUser("Available commands are:"
-                +"1) list"
-                +"2) todo"
-                +"3) deadline"
-                +"4) event"
-                +"5) done"
-                +"6) delete"
-                +"7) bye");
+                +"01) list"
+                +"02) todo"
+                +"03) deadline"
+                +"04) event"
+                +"05) done"
+                +"06) delete"
+                +"07) find"
+                +"08) before"
+                +"09) after"
+                +"10) today"
+                +"11) bye");
     }
 
+
+    /** Prints all the tasks in the task list*/
     public void printList(String list) {
         printToUser("Here are the tasks in your list: " + LS + list);
     }
 
+    /** Prints a filtered list of tasks with a input condition*/
     public void printFiltered(String list, String condition) {
         printToUser("Here are the tasks in your list that " + condition
                     + LS + list);
@@ -65,13 +80,13 @@ public class Ui {
 
 
 
-
+    /** Prints an additional exiting message to signal successful exiting from Duke*/
     public void printExit(String ... list) {
         printToUser("EXITING ... ");
     }
 
 
-
+    /** Common printing method to output all messages with proper prefixes*/
     public void printToUser(String message) {
         System.out.println(PREFIX + border);
         System.out.println(PREFIX + message.replace("\n", LS + PREFIX));
