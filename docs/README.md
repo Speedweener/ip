@@ -128,7 +128,7 @@ Example:
 * `find party`
 * `find -of-`
 <br/><br/> 
-### List all tasks before a certain date: `before`
+### List all tasks before a certain date: before
 Filters the task list and lists out tasks which happen before the given date and time.
 Date and time entered must follow format accordingly.
 
@@ -137,7 +137,7 @@ Example:
 * `before 20200105 2359`
 * `before 20191115 1200`
 <br/><br/> 
-### List all tasks after a certain date: `after`
+### List all tasks after a certain date: after
 Filters the task list and lists out tasks which happen after the given date and time.
 Date and time entered must follow format accordingly.
 
