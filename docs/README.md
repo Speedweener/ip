@@ -19,7 +19,7 @@ your tasks.
     * [List all tasks before a certain date:](#list-all-tasks-before-a-certain-date-before) **before**
     * [List all tasks after a certain date:](#list-all-tasks-after-a-certain-date-after) **after**
     * [List all tasks occuring today:](#list-all-tasks-occurring-today-today) **today**
-    * [Exit the Duke program:](#exit-the-duke-program-bye) **bye**
+    * [Exit the Duke program:](#bye) **bye**
     * [Saving the data:](#saving-the-data) 
     * [Loading the data:](#loading-the-data) 
 * [FAQ](#faq)
@@ -151,6 +151,7 @@ Filters the task list and lists out tasks which happen on the current day.
 
     Format: today
 <br/><br/> 
+<a name="bye"></a>  
 ### Exit the Duke program: `bye`
 Exits the program.
 
