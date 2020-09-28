@@ -8,17 +8,17 @@ your tasks.
 
 * [Quick Start](#quick-start)  
 * [Features](#features)
-    * [Print help information:](#print-help-information-help) **help**
-    * [List out all existing task:](#list-out-all-existing-task-list) **list**
-    * [Add a new ToDo task](#add-a-new-todo-task-todo) **todo**
-    * [Add a new Deadline task:](#add-a-new-deadline-task-deadline) **deadline**
-    * [Add a new Event task:](#add-a-new-event-task-event) **event**
-    * [Mark a task as done:](#mark-a-task-as-done-done) **done**
-    * [Delete a task:](#delete-a-task-delete) **delete**
-    * [Find tasks using keyword:](#find-tasks-using-keyword-\`find\`) **find**
-    * [List all tasks before a certain date:](#list-all-tasks-before-a-certain-date-before) **before**
-    * [List all tasks after a certain date:](#list-all-tasks-after-a-certain-date-after) **after**
-    * [List all tasks occuring today:](#list-all-tasks-occurring-today-today) **today**
+    * [Print help information:](#help) **help**
+    * [List out all existing task:](#list) **list**
+    * [Add a new ToDo task](#todo) **todo**
+    * [Add a new Deadline task:](#deadline) **deadline**
+    * [Add a new Event task:](#event) **event**
+    * [Mark a task as done:](#one) **done**
+    * [Delete a task:](#delete) **delete**
+    * [Find tasks using keyword:](#find) **find**
+    * [List all tasks before a certain date:](#before) **before**
+    * [List all tasks after a certain date:](#after) **after**
+    * [List all tasks occuring today:](#today) **today**
     * [Exit the Duke program:](#bye) **bye**
     * [Saving the data:](#saving-the-data) 
     * [Loading the data:](#loading-the-data) 
@@ -62,19 +62,21 @@ Notes on command format:
 
     
 <br/><br/> 
-
+<a name="help"></a>  
 ### Print help information: `help`
 Prints out all the commands available in the app.
 
     Format: help 
     
 <br/><br/> 
+<a name="list"></a>  
 ### List out all existing task: `list` 
 List out all task currently existing in the list. Tasks are indexed according to the order in which the tasks were added to the list.
 
     Format: list
     
 <br/><br/> 
+<a name="todo"></a>  
 ### Add a new ToDo task: `todo`
 Adds a new *ToDo* task to the list with a task description.
 
@@ -84,6 +86,7 @@ Example:
 * `todo project research`
 
 <br/><br/> 
+<a name="deadline"></a>  
 ### Add a new Deadline task: `deadline`
 Adds a new *Deadline* task to the list with a task description and a date and time.
 Date and time entered must follow format accordingly.
@@ -94,6 +97,7 @@ Example:
 * `deadline assignment /by 20200609 1800`
 * `deadline project research /by 20191231 2359 `
 <br/><br/> 
+<a name="event"></a>  
 ### Add a new Event task: `event`
 Adds a new *Event* task to the list with a task description and a date and time.
 Date and time entered must follow format accordingly.
@@ -103,6 +107,7 @@ Example:
 * `event birthday party /at 20200609 1700`
 * `event End-of-year celebration /at 20191231 2359 `
 <br/><br/> 
+<a name="done"></a>  
 ### Mark a task as done: `done`
 Marks a task with the specified index as done.  The index will correspond to the index of that task in the list. You can do a `list` command to check the task indexes.
 
@@ -111,6 +116,7 @@ Example:
 * `done 3`
 * `done 1 `
 <br/><br/> 
+<a name="delete"></a>  
 ### Delete a task: `delete`
 Deletes a task with the specified index.  The index will correspond to the index of that task in the list. You can do a `list` command to check the task indexes.
 
@@ -119,6 +125,7 @@ Example:
 * `delete 5`
 * `delete 2 `
 <br/><br/> 
+<a name="find"></a>  
 ### Find tasks using keyword: `find`
 Searches the task list and lists out the tasks which have descriptions
 containing the keyword.
@@ -128,7 +135,8 @@ Example:
 * `find party`
 * `find -of-`
 <br/><br/> 
-### List all tasks before a certain date: before
+<a name="bye"></a>  
+### List all tasks before a certain date: `before`
 Filters the task list and lists out tasks which happen before the given date and time.
 Date and time entered must follow format accordingly.
 
@@ -137,7 +145,8 @@ Example:
 * `before 20200105 2359`
 * `before 20191115 1200`
 <br/><br/> 
-### List all tasks after a certain date: after
+<a name="after"></a>  
+### List all tasks after a certain date: `after`
 Filters the task list and lists out tasks which happen after the given date and time.
 Date and time entered must follow format accordingly.
 
@@ -146,7 +155,8 @@ Example:
 * `after 20181205 2159`
 * `after 19801112 1100`
 <br/><br/> 
-### List all tasks occurring today: `today
+<a name="today"></a>  
+### List all tasks occurring today: `today`
 Filters the task list and lists out tasks which happen on the current day.
 
     Format: today
