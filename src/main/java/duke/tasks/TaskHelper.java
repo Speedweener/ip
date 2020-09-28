@@ -1,7 +1,7 @@
 package duke.tasks;
+
 import duke.Common.DateTimeValidator;
 import duke.Common.Messages;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class TaskHelper {
             return ("Invalid 'delete' command!" + LS + Messages.MESSAGE_NUMBER_FORMAT_EXCEPTION);
         }
 
-        if (taskNumber <= taskCount && !(taskNumber < 0)) {
+        if (taskNumber <= taskCount && !(taskNumber <= 0)) {
             String confirmMessage = "Noted. I've removed this task:" + LS
                                + "\t" + tasks.get(taskNumber - 1).toString();
             tasks.remove(taskNumber - 1);
@@ -76,7 +76,7 @@ public class TaskHelper {
             return ("Invalid 'done' command!" + LS + Messages.MESSAGE_NUMBER_FORMAT_EXCEPTION);
         }
 
-        if (taskNumber <= taskCount && !(taskNumber < 0)) {
+        if (taskNumber <= taskCount && !(taskNumber <= 0)) {
             if (tasks.get(taskNumber - 1).markAsDone()) { // Returns true if task has not been marked before
                 String confirmMessage = "Nice! I've marked this task as done:" + LS
                                        + "\t" + tasks.get(taskNumber - 1).toString();
@@ -103,7 +103,7 @@ public class TaskHelper {
         taskCount++;
         String confirmMessage = addText();
         try {
-            storage.appendList(tasks.get(taskCount - 1).exportTask());
+            storage.appendList(tasks.get(taskCount - 1).exportTask() + LS);
         } catch (IOException e) {
             confirmMessage = confirmMessage + Messages.MESSAGE_IO_WRITE_ERROR + e.getMessage();
         }
@@ -134,7 +134,7 @@ public class TaskHelper {
             taskCount++;
             String confirmMessage = addText();
             try {
-                storage.appendList(tasks.get(taskCount - 1).exportTask());
+                storage.appendList(tasks.get(taskCount - 1).exportTask() + LS);
             } catch (IOException e) {
                 confirmMessage = confirmMessage + LS + Messages.MESSAGE_IO_WRITE_ERROR  + e.getMessage();
             }
@@ -167,7 +167,7 @@ public class TaskHelper {
             taskCount++;
             String confirmMessage = addText();
             try {
-                storage.appendList(tasks.get(taskCount - 1).exportTask());
+                storage.appendList(tasks.get(taskCount - 1).exportTask() + LS);
             } catch (IOException e) {
                 confirmMessage = confirmMessage + LS + Messages.MESSAGE_IO_WRITE_ERROR  + e.getMessage();
             }

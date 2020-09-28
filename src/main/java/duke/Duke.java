@@ -1,5 +1,4 @@
 package duke;
-
 import duke.Commands.Command;
 import duke.Commands.ExitCommand;
 import duke.exceptions.EmptyCommandException;
@@ -9,10 +8,13 @@ import duke.userinterface.Ui;
 import duke.tasks.Storage;
 import duke.tasks.TaskHelper;
 import duke.userinterface.Parser;
+import java.io.File;
+
 
 public class Duke {
     private TaskHelper taskHelper;
     private Ui ui;
+
     private Storage storage;
 
     /**
@@ -23,7 +25,7 @@ public class Duke {
     public Duke(String filePath) {
         ui = new Ui();
         ui.printWelcome();
-        storage = new Storage(filePath);
+        storage = new Storage(getJarFilepath()+filePath);
         taskHelper = new TaskHelper(storage.readFromFile(ui));
         ui.printList(taskHelper.list());
     }
@@ -49,7 +51,15 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        new Duke("data/list.txt").run();
+        new Duke("/data/list.txt").run();
+    }
+
+    /**
+     * Returns path of jar file during execution to allow
+     * app to create txt file in the same location.
+     */
+    private static String getJarFilepath() {
+        return new File(Duke.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent().replace("%20", " ");
     }
 
 }

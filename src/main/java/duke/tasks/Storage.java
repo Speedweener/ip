@@ -17,6 +17,7 @@ public class Storage {
     private File f;
     private String fullFilePath;
 
+
     /** Variables to create tasks from txt file*/
     private ArrayList<Task> tasks = new ArrayList<>();
     private int taskCount = 0;
@@ -149,6 +150,4 @@ public class Storage {
         }
         return listString;
     }
-
-
 }

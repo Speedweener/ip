@@ -1,8 +1,5 @@
-E | 1 | w | 20190909 0900
-T | 1 | what is this
-E | 1 | ask | 20191020 0000
-T | 1 | wken
-T | 1 | knsd
-D | 0 | jbsd | 20190211 1900
-E | 0 | sjnbd | 20201211 1211
-T | 0 | ewT | 0 | kjsahdjkb sjdkajsdn
+T | 0 | wje
+D | 1 | w | 20190202 1200
+E | 0 | jsbjd | 20201111 1111
+T | 0 | is this real or not
+D | 0 | real shit | 20190202 1200
