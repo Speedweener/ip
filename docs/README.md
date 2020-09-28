@@ -14,8 +14,8 @@ your tasks.
     * [Add a new Deadline task:](#add-a-new-deadline-task-deadline) **deadline**
     * [Add a new Event task:](#add-a-new-event-task-event) **event**
     * [Mark a task as done:](#mark-a-task-as-done-done) **done**
-    * [Delete a task:](#delete-a-task-`-delete-`) **delete**
-    * [Find tasks using keyword:](#find-tasks-using-keyword-`find`) **find**
+    * [Delete a task:](#delete-a-task-delete) **delete**
+    * [Find tasks using keyword:](#find-tasks-using-keyword-\`find\`) **find**
     * [List all tasks before a certain date:](#list-all-tasks-before-a-certain-date-before) **before**
     * [List all tasks after a certain date:](#list-all-tasks-after-a-certain-date-after) **after**
     * [List all tasks occuring today:](#list-all-tasks-occurring-today-today) **today**
