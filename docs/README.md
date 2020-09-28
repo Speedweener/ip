@@ -13,7 +13,7 @@ your tasks.
     * [Add a new ToDo task](#todo) **todo**
     * [Add a new Deadline task:](#deadline) **deadline**
     * [Add a new Event task:](#event) **event**
-    * [Mark a task as done:](#one) **done**
+    * [Mark a task as done:](#done) **done**
     * [Delete a task:](#delete) **delete**
     * [Find tasks using keyword:](#find) **find**
     * [List all tasks before a certain date:](#before) **before**
@@ -135,7 +135,7 @@ Example:
 * `find party`
 * `find -of-`
 <br/><br/> 
-<a name="bye"></a>  
+<a name="before"></a>  
 ### List all tasks before a certain date: `before`
 Filters the task list and lists out tasks which happen before the given date and time.
 Date and time entered must follow format accordingly.
