@@ -8,7 +8,7 @@ your tasks.
 
 * [Quick Start](#quick-start)  
 * [Features](#features)
-	* [Print help information:](#print-help-information-help) **help**
+    * [Print help information:](#print-help-information-help) **help**
     * [List out all existing task:](#list-out-all-existing-task-list) **list**
     * [Add a new ToDo task](#add-a-new-todo-task-todo) **todo**
     * [Add a new Deadline task:](#add-a-new-deadline-task-deadline) **deadline**
@@ -146,7 +146,7 @@ Example:
 * `after 20181205 2159`
 * `after 19801112 1100`
 <br/><br/> 
-### List all tasks occurring today: `today`
+### List all tasks occurring today: `today
 Filters the task list and lists out tasks which happen on the current day.
 
     Format: today
