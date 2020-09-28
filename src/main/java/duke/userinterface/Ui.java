@@ -1,6 +1,6 @@
 package duke.userinterface;
 
-import duke.Common.Messages;
+import duke.common.Messages;
 import duke.exceptions.EmptyCommandException;
 
 import java.io.InputStream;

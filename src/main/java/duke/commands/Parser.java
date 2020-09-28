@@ -1,9 +1,7 @@
-package duke.userinterface;
+package duke.commands;
 
-import duke.exceptions.EmptyCommandException;
 import duke.exceptions.IncompleteCommandException;
 import duke.exceptions.UnknownCommandException;
-import duke.Commands.*;
 
 public class Parser {
 

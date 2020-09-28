@@ -1,7 +1,8 @@
-package duke.Commands;
+package duke.commands;
 
 import duke.userinterface.Ui;
-import duke.tasks.*;
+import duke.tasks.TaskHelper;
+import duke.tasks.Storage;
 
 public class TodayCommand extends Command{
     public TodayCommand(String description) {

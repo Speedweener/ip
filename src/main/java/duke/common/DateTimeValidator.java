@@ -1,6 +1,5 @@
-package duke.Common;
+package duke.common;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 public class DateTimeValidator {

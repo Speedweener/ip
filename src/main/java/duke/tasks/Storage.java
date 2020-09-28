@@ -1,7 +1,7 @@
 package duke.tasks;
 
-import duke.Common.DateTimeValidator;
-import duke.Common.Messages;
+import duke.common.DateTimeValidator;
+import duke.common.Messages;
 import duke.userinterface.Ui;
 
 import java.io.File;

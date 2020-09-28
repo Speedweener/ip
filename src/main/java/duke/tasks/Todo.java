@@ -1,7 +1,5 @@
 package duke.tasks;
 
-import duke.tasks.Task;
-
 import java.time.LocalDateTime;
 
 public class Todo extends Task {

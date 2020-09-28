@@ -1,16 +1,18 @@
-package duke.Commands;
+package duke.commands;
 
 import duke.tasks.Storage;
 import duke.tasks.TaskHelper;
 import duke.userinterface.Ui;
 
-public class EventCommand extends Command{
-    public EventCommand(String description) {
+public class FindCommand extends Command {
+
+    public FindCommand(String description) {
         super(description);
     }
 
     @Override
     public void execute(TaskHelper taskHelper, Ui ui, Storage storage) {
-        ui.printToUser(taskHelper.event(description, storage));
+        ui.printFiltered(taskHelper.filterKeyword(description), "match the keyword entered:");
     }
+
 }

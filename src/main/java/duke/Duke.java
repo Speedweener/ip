@@ -1,13 +1,14 @@
 package duke;
-import duke.Commands.Command;
-import duke.Commands.ExitCommand;
+
+import duke.commands.Command;
+import duke.commands.ExitCommand;
 import duke.exceptions.EmptyCommandException;
 import duke.exceptions.IncompleteCommandException;
 import duke.exceptions.UnknownCommandException;
 import duke.userinterface.Ui;
 import duke.tasks.Storage;
 import duke.tasks.TaskHelper;
-import duke.userinterface.Parser;
+import duke.commands.Parser;
 import java.io.File;
 
 

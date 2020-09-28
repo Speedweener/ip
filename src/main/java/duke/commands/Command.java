@@ -1,4 +1,4 @@
-package duke.Commands;
+package duke.commands;
 
 import duke.tasks.Storage;
 import duke.tasks.TaskHelper;

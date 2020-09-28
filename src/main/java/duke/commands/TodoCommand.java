@@ -1,16 +1,18 @@
-package duke.Commands;
+package duke.commands;
 
 import duke.tasks.Storage;
 import duke.tasks.TaskHelper;
 import duke.userinterface.Ui;
 
-public class HelpCommand extends Command{
-    public HelpCommand(String description) {
+public class TodoCommand extends Command {
+
+    public TodoCommand(String description) {
         super(description);
     }
 
     @Override
     public void execute(TaskHelper taskHelper, Ui ui, Storage storage) {
-        ui.printHelp();
+        ui.printToUser(taskHelper.todo(description, storage));
     }
+
 }
