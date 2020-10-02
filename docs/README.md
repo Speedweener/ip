@@ -168,7 +168,6 @@ Exits the program.
     Format: bye
 <br/><br/>     
 ### Saving the data: 
-`bye`
 Saving of the task list data is done automatically into your hard disk. The list will be saved as **list .txt**  in the **data** folder located in your home folder.
 <br/><br/> 
 ### Loading the data:
